@@ -1,6 +1,6 @@
-# codos
+# 💪CODOS💪
 
-## Un sistema de bajo coste basado en ESP32 para la detección del CO2 para el aula
+## Un sistema de bajo coste basado en ESP32 para la detección del CO<sub>2</sub> para el aula
 
 "Algunos científicos comentan que mejorar la ventilación y la calidad del aire es un método que las escuelas pueden usar para reducir el riesgo de transmisión del coronavirus.
 Sin embargo, en una encuesta entre distritos escolares grandes del Norte de Texas, The Dallas Morning News encontró que las escuelas están lejos de alcanzar los parámetros de calidad del aire propuestos en junio por expertos en construcción.  
@@ -18,7 +18,7 @@ Artículos cómo este me han llevado a elaborar un pequeño dispositivo de bajo 
 
 https://www.miteco.gob.es/es/ministerio/medidas-covid19/sistemas-climatizacion-ventilacion/default.aspx
 
-Utilizando una hoja de cálculo podemos calcular la cantidad de CO2 en función de diversas variables del aula. En el siguiente artículo tenemos una calculadora que permite hacer dicho cálculo:
+Utilizando una hoja de cálculo podemos calcular la cantidad de CO<sub>2</sub>  en función de diversas variables del aula. En el siguiente artículo tenemos una calculadora que permite hacer dicho cálculo:
 
 https://medium.com/@jjose_19945/how-to-quantify-the-ventilation-rate-of-an-indoor-space-using-a-cheap-co2-monitor-4d8b6d4dab44
 
