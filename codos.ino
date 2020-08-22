@@ -8,8 +8,6 @@ CODOS AKA CO2
 #include <Adafruit_Sensor.h>            // Librería estándar para los sensores de Adafruit
 #include "SparkFunCCS811.h"             // Puedes descargar la librería para el sensor de CO2 en: http://librarymanager/All#SparkFun_CCS811
 
-#define SEALEVELPRESSURE_HPA (1013.25)  // Valor de la presión al nivel del mar
-
 #define CCS811_ADDR 0x5A                // Dirección i2c del sensor de CO2
 //#define CCS811_ADDR 0x5B                // Dirección i2c alternativa del sensor de CO2
 
@@ -78,7 +76,7 @@ void loop(){
   if (client) {                             // If a new client connects,
     currentTime = millis();
     previousTime = currentTime;
-    Serial.println("New Client.");          // print a message out in the serial port
+    Serial.println("Nuevo cliente conectado.");          // print a message out in the serial port
     String currentLine = "";                // make a String to hold incoming data from the client
     while (client.connected() && currentTime - previousTime <= timeoutTime) {  // loop while the client's connected
       currentTime = millis();
@@ -113,30 +111,29 @@ void loop(){
             // Web Page Heading
             client.println("</style></head>");
             // Web Page Body
-            client.println("<body><h1>ESP32 with BME280</h1>");
-            client.println("<table><tr><th>MEASUREMENT</th><th>VALUE</th></tr>");
+            client.println("<body><h1>CODOS</h1>");
+            client.println("<table><tr><th>Medida</th><th>Valor</th></tr>");
             client.println("<tr><td>Temp. Celsius</td><td><span class=\"sensor\">");
             client.println(BME280_sensor.readTemperature());
             client.println(" *C</span></td></tr>");  
-            client.println("<tr><td>Pressure</td><td><span class=\"sensor\">");
+            client.println("<tr><td>Presi&#243;n</td><td><span class=\"sensor\">");
             client.println(BME280_sensor.readPressure() / 100.0F);
             client.println(" hPa</span></td></tr>");
-            client.println("<tr><td>Approx. Altitude</td><td><span class=\"sensor\">");
-            client.println(BME280_sensor.readAltitude(SEALEVELPRESSURE_HPA));
-            client.println(" m</span></td></tr>"); 
-            client.println("<tr><td>Humidity</td><td><span class=\"sensor\">");
+            client.println("<tr><td>Humedad</td><td><span class=\"sensor\">");
             client.println(BME280_sensor.readHumidity());
             client.println(" %</span></td></tr>"); 
-            client.println("<tr><td>CO2</td><td><span class=\"sensor\">");
-            if (CO2_sensor.dataAvailable())
-            {
+
+//            if (CO2_sensor.dataAvailable())
+//           {            
+            CO2_sensor.readAlgorithmResults();
+            client.println("<tr><td>CO<sub>2</sub></td><td><span class=\"sensor\">");
             client.println(CO2_sensor.getCO2());
             client.println(" %</span></td></tr>"); 
-            client.println("<tr><td>CO2</td><td><span class=\"sensor\">");
+            client.println("<tr><td>TVOC</td><td><span class=\"sensor\">");
             client.println(CO2_sensor.getTVOC());
             client.println(" %</span></td></tr>"); 
+//            }
             client.println("</body></html>");
-            }
             // The HTTP response ends with another blank line
             client.println();
             // Break out of the while loop
@@ -157,4 +154,5 @@ void loop(){
     Serial.println("Client disconnected.");
     Serial.println("");
   }
+  delay(2000);
 }
