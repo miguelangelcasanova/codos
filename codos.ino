@@ -3,7 +3,7 @@ CODOS AKA CO2
 *********/
 
 #include <WiFi.h>                       // Librería Wi-Fi
-#include <Wire.h>                   
+#include <Wire.h>                       // Librería Wire para el soporte del protocolo i2c
 #include <Adafruit_BME280.h>            // Librería para el sensor BME280
 #include <Adafruit_Sensor.h>            // Librería estándar para los sensores de Adafruit
 #include "SparkFunCCS811.h"             // Puedes descargar la librería para el sensor de CO2 en: http://librarymanager/All#SparkFun_CCS811
