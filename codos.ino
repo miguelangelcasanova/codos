@@ -10,16 +10,18 @@ CODOS AKA CO2
 
 #define SEALEVELPRESSURE_HPA (1013.25)  // Valor de la presión al nivel del mar
 
-#define CCS811_ADDR 0x5B                // Dirección i2c del sensor de CO2
-//#define CCS811_ADDR 0x5A              // Dirección i2c alternativa del sensor de CO2
+#define CCS811_ADDR 0x5A                // Dirección i2c del sensor de CO2
+//#define CCS811_ADDR 0x5B                // Dirección i2c alternativa del sensor de CO2
 
 CCS811 CO2_sensor(CCS811_ADDR);   
 
-Adafruit_BME280 BME_sensor(BME280_ADDR);       // Dirección i2c del sensor de humedad, presión y temperatura
+#define BME280_ADDR 0x76                // Dirección i2c del sensor BME280
+
+Adafruit_BME280 BME280_sensor;       // Dirección i2c del sensor de humedad, presión y temperatura
 
 // Reemplaza los datos con el identificador de la red WIFI y la contraseña del aula
-const char* ssid     = "NOMBRE_DE_TU_RED";
-const char* password = "CLAVE_DE_TU_RED";
+//const char* ssid     = "NOMBRE_DE_TU_RED";
+//const char* password = "CLAVE_DE_TU_RED";
 
 WiFiServer server(80);                  // Seleccionar el puerto del servidor Web
 
@@ -47,8 +49,9 @@ void setup() {
     while (1)
       ;
   }
+  
   delay(10);  
-  if (!bme.begin(0x76)) {
+  if (!BME280_sensor.begin(BME280_ADDR)) {
     Serial.println("Error: el sensor de temperatura, presión y humedad BME280 no se encuentra. Por favor, comprueba el cableado.");
     while (1);
   }
@@ -113,24 +116,24 @@ void loop(){
             client.println("<body><h1>ESP32 with BME280</h1>");
             client.println("<table><tr><th>MEASUREMENT</th><th>VALUE</th></tr>");
             client.println("<tr><td>Temp. Celsius</td><td><span class=\"sensor\">");
-            client.println(bme.readTemperature());
+            client.println(BME280_sensor.readTemperature());
             client.println(" *C</span></td></tr>");  
             client.println("<tr><td>Pressure</td><td><span class=\"sensor\">");
-            client.println(bme.readPressure() / 100.0F);
+            client.println(BME280_sensor.readPressure() / 100.0F);
             client.println(" hPa</span></td></tr>");
             client.println("<tr><td>Approx. Altitude</td><td><span class=\"sensor\">");
-            client.println(bme.readAltitude(SEALEVELPRESSURE_HPA));
+            client.println(BME280_sensor.readAltitude(SEALEVELPRESSURE_HPA));
             client.println(" m</span></td></tr>"); 
             client.println("<tr><td>Humidity</td><td><span class=\"sensor\">");
-            client.println(bme.readHumidity());
+            client.println(BME280_sensor.readHumidity());
             client.println(" %</span></td></tr>"); 
             client.println("<tr><td>CO2</td><td><span class=\"sensor\">");
             if (CO2_sensor.dataAvailable())
             {
-            client.println(CO2_sensor.getCO2()));
+            client.println(CO2_sensor.getCO2());
             client.println(" %</span></td></tr>"); 
             client.println("<tr><td>CO2</td><td><span class=\"sensor\">");
-            client.println(CO2_sensor.getTVOC()));
+            client.println(CO2_sensor.getTVOC());
             client.println(" %</span></td></tr>"); 
             client.println("</body></html>");
             }
@@ -155,4 +158,3 @@ void loop(){
     Serial.println("");
   }
 }
-
