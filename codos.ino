@@ -1,33 +1,27 @@
 /*********
-  Rui Santos
-  Complete project details at http://randomnerdtutorials.com  
+CODOS AKA CO2 
 *********/
 
-// Load Wi-Fi library
-#include <WiFi.h>
-#include <Wire.h>
-#include <Adafruit_BME280.h>
-#include <Adafruit_Sensor.h>
+#include <WiFi.h>                       // Librería Wi-Fi
+#include <Wire.h>                   
+#include <Adafruit_BME280.h>            // Librería para el sensor BME280
+#include <Adafruit_Sensor.h>            // Librería estándar para los sensores de Adafruit
+#include "SparkFunCCS811.h"             // Puedes descargar la librería para el sensor de CO2 en: http://librarymanager/All#SparkFun_CCS811
 
-//uncomment the following lines if you're using SPI
-/*#include <SPI.h>
-#define BME_SCK 18
-#define BME_MISO 19
-#define BME_MOSI 23
-#define BME_CS 5*/
+#define SEALEVELPRESSURE_HPA (1013.25)  // Valor de la presión al nivel del mar
 
-#define SEALEVELPRESSURE_HPA (1013.25)
+#define CCS811_ADDR 0x5B                // Dirección i2c del sensor de CO2
+//#define CCS811_ADDR 0x5A              // Dirección i2c alternativa del sensor de CO2
 
-Adafruit_BME280 bme; // I2C
-//Adafruit_BME280 bme(BME_CS); // hardware SPI
-//Adafruit_BME280 bme(BME_CS, BME_MOSI, BME_MISO, BME_SCK); // software SPI
+CCS811 mySensor(CCS811_ADDR);
 
-// Replace with your network credentials
-const char* ssid     = "MOVISTAR_4B56";
-const char* password = "C7H3bxsmLdfn6GaJzZcN";
+Adafruit_BME280 bme(BME280_ADDR);       // Dirección i2c del sensor de humedad, presión y temperatura
 
-// Set web server port number to 80
-WiFiServer server(80);
+// Reemplaza los datos con el identificador de la red WIFI y la contraseña del aula
+const char* ssid     = "NOMBRE_DE_TU_RED";
+const char* password = "CLAVE_DE_TU_RED";
+
+WiFiServer server(80);                  // Seleccionar el puerto del servidor Web
 
 // Variable to store the HTTP request
 String header;
@@ -43,6 +37,16 @@ void setup() {
   Serial.begin(115200);
   bool status;
 
+  Serial.println("Sensor CCS811 y BME280");
+
+  Wire.begin(); //Inialize I2C Hardware
+
+  if (mySensor.begin() == false)
+  {
+    Serial.print("CCS811 error. Please check wiring. Freezing...");
+    while (1)
+      ;
+  }
   // default settings
   // (you can also pass in a Wire library object like &Wire2)
   //status = bme.begin();  
@@ -147,28 +151,11 @@ void loop(){
 }
 
 /*
-#include <Wire.h>
 
-#include "SparkFunCCS811.h" //Click here to get the library: http://librarymanager/All#SparkFun_CCS811
-
-#define CCS811_ADDR 0x5B //Default I2C Address
-//#define CCS811_ADDR 0x5A //Alternate I2C Address
-
-CCS811 mySensor(CCS811_ADDR);
 
 void setup()
 {
-  Serial.begin(115200);
-  Serial.println("CCS811 Basic Example");
 
-  Wire.begin(); //Inialize I2C Hardware
-
-  if (mySensor.begin() == false)
-  {
-    Serial.print("CCS811 error. Please check wiring. Freezing...");
-    while (1)
-      ;
-  }
 }
 
 void loop()
