@@ -13,9 +13,9 @@ CODOS AKA CO2
 #define CCS811_ADDR 0x5B                // Dirección i2c del sensor de CO2
 //#define CCS811_ADDR 0x5A              // Dirección i2c alternativa del sensor de CO2
 
-CCS811 mySensor(CCS811_ADDR);
+CCS811 CO2_sensor(CCS811_ADDR);   
 
-Adafruit_BME280 bme(BME280_ADDR);       // Dirección i2c del sensor de humedad, presión y temperatura
+Adafruit_BME280 BME_sensor(BME280_ADDR);       // Dirección i2c del sensor de humedad, presión y temperatura
 
 // Reemplaza los datos con el identificador de la red WIFI y la contraseña del aula
 const char* ssid     = "NOMBRE_DE_TU_RED";
@@ -37,26 +37,24 @@ void setup() {
   Serial.begin(115200);
   bool status;
 
-  Serial.println("Sensor CCS811 y BME280");
+  Serial.println("Sensores CCS811 y BME280");
 
   Wire.begin(); //Inialize I2C Hardware
 
-  if (mySensor.begin() == false)
+  if (CO2_sensor.begin() == false)
   {
-    Serial.print("CCS811 error. Please check wiring. Freezing...");
+    Serial.print("Error: el sensor de CO2 CCS811 no se encuentra. Por favor, comprueba el cableado.");
     while (1)
       ;
   }
-  // default settings
-  // (you can also pass in a Wire library object like &Wire2)
-  //status = bme.begin();  
+  delay(10);  
   if (!bme.begin(0x76)) {
-    Serial.println("Could not find a valid BME280 sensor, check wiring!");
+    Serial.println("Error: el sensor de temperatura, presión y humedad BME280 no se encuentra. Por favor, comprueba el cableado.");
     while (1);
   }
 
-  // Connect to Wi-Fi network with SSID and password
-  Serial.print("Connecting to ");
+  // Conectar a la red  Wi-Fi con el SSID y la contraseña selecionadas
+  Serial.print("Conectando a ");
   Serial.println(ssid);
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
@@ -65,8 +63,8 @@ void setup() {
   }
   // Print local IP address and start web server
   Serial.println("");
-  Serial.println("WiFi connected.");
-  Serial.println("IP address: ");
+  Serial.println("WiFi conectada.");
+  Serial.println("Dirección IP del servidor: ");
   Serial.println(WiFi.localIP());
   server.begin();
 }
@@ -110,14 +108,13 @@ void loop(){
             client.println(".sensor { color:white; font-weight: bold; background-color: #bcbcbc; padding: 1px; }");
             
             // Web Page Heading
-            client.println("</style></head><body><h1>ESP32 with BME280</h1>");
+            client.println("</style></head>");
+            // Web Page Body
+            client.println("<body><h1>ESP32 with BME280</h1>");
             client.println("<table><tr><th>MEASUREMENT</th><th>VALUE</th></tr>");
             client.println("<tr><td>Temp. Celsius</td><td><span class=\"sensor\">");
             client.println(bme.readTemperature());
             client.println(" *C</span></td></tr>");  
-            client.println("<tr><td>Temp. Fahrenheit</td><td><span class=\"sensor\">");
-            client.println(1.8 * bme.readTemperature() + 32);
-            client.println(" *F</span></td></tr>");       
             client.println("<tr><td>Pressure</td><td><span class=\"sensor\">");
             client.println(bme.readPressure() / 100.0F);
             client.println(" hPa</span></td></tr>");
@@ -127,13 +124,22 @@ void loop(){
             client.println("<tr><td>Humidity</td><td><span class=\"sensor\">");
             client.println(bme.readHumidity());
             client.println(" %</span></td></tr>"); 
+            client.println("<tr><td>CO2</td><td><span class=\"sensor\">");
+            if (CO2_sensor.dataAvailable())
+            {
+            client.println(CO2_sensor.getCO2()));
+            client.println(" %</span></td></tr>"); 
+            client.println("<tr><td>CO2</td><td><span class=\"sensor\">");
+            client.println(CO2_sensor.getTVOC()));
+            client.println(" %</span></td></tr>"); 
             client.println("</body></html>");
-            
+            }
             // The HTTP response ends with another blank line
             client.println();
             // Break out of the while loop
             break;
-          } else { // if you got a newline, then clear currentLine
+          } 
+          else { // if you got a newline, then clear currentLine
             currentLine = "";
           }
         } else if (c != '\r') {  // if you got anything else but a carriage return character,
@@ -150,37 +156,3 @@ void loop(){
   }
 }
 
-/*
-
-
-void setup()
-{
-
-}
-
-void loop()
-{
-  //Check to see if data is ready with .dataAvailable()
-  if (mySensor.dataAvailable())
-  {
-    //If so, have the sensor read and calculate the results.
-    //Get them later
-    mySensor.readAlgorithmResults();
-
-    Serial.print("CO2[");
-    //Returns calculated CO2 reading
-    Serial.print(mySensor.getCO2());
-    Serial.print("] tVOC[");
-    //Returns calculated TVOC reading
-    Serial.print(mySensor.getTVOC());
-    Serial.print("] millis[");
-    //Display the time since program start
-    Serial.print(millis());
-    Serial.print("]");
-    Serial.println();
-  }
-
-  delay(10); //Don't spam the I2C bus
-}
-
-*/
