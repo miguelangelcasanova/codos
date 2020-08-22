@@ -10,7 +10,7 @@ Al revisar el nivel de dióxido de carbono en las aulas se puede comprobar si es
 Fuente: https://noticiasenlafrontera.net/escuelas-no-siguen-recomendaciones-de-calidad-del-aire-parar-reducir-exposicion-a-covid-19/
 
 
-Existen además evidencias de que los altos niveles de CO2 influyen sobre el rendimiento de los alumnos en el aula.
+Existen además evidencias de que los altos niveles de CO<sub>2</sub> influyen sobre el rendimiento de los alumnos en el aula.
 https://pubmed.ncbi.nlm.nih.gov/25117890/
 
 Artículos cómo este me han llevado a elaborar un pequeño dispositivo de bajo coste que permita monitorizar los niveles de CO<sub>2</sub> en las aulas con el objeto de poder medir la concentración de dicho gas y de esta forma saber cuándo tenemos que renovar el aire de un aula para poder seguir de la mejor forma posible las propias indicaciones al respecto de las administraciones públicas españolas:
@@ -24,18 +24,18 @@ https://medium.com/@jjose_19945/how-to-quantify-the-ventilation-rate-of-an-indoo
 
 ## ¿Qué es 💪CODOS💪?
 
-💪CODOS💪 es un pequeño circuito electrónico construido sobre un microcontrolador ESP32, un microcontrolador similar a un Arduino pero que ofrece conectividad WiFi y Bluetooth. Esto lo convierte en un dispositivo de Internet de las Cosas, (IoT) lo que nos permite monitorizar los datos de los sensores conectados al mismo a través de Internet. El dispositivo está pensado para medir la cantidad de CO2 y otros parámetros ambientales para recomendarnos cuando deberíamos renovar el aire de un aula cuando no se disponga de un sistema de ventilación forzada, o bien no sea posible mantener las ventanas abiertas todo el tiempo.
+💪CODOS💪 es un pequeño circuito electrónico construido sobre un microcontrolador ESP32, un microcontrolador similar a un Arduino pero que ofrece conectividad WiFi y Bluetooth. Esto lo convierte en un dispositivo de Internet de las Cosas, (IoT) lo que nos permite monitorizar los datos de los sensores conectados al mismo a través de Internet. El dispositivo está pensado para medir la cantidad de CO<sub>2</sub> y otros parámetros ambientales para recomendarnos cuando deberíamos renovar el aire de un aula cuando no se disponga de un sistema de ventilación forzada, o bien no sea posible mantener las ventanas abiertas todo el tiempo.
 
 ![CODOS es un guiño a hincar los codos en el aula...](img/school_1810350a1-1.jpg)
 
-* Con un simple Arduino, un sensor de CO2 y unos led podemos construir un sistema simplificado que permita indicar cuando los niveles de CO2 están dentro de unos determinado umbrales, esa fue mi primera idea y publicaré también esta versión; pero cambiando el Arduino por un ESP8266 o un ESP32 podemos además enviar los datos a un servidor y monitorizar por ejemplo los datos de distintas aulas de forma centralizada, almacenar datos estadísticos en una base de datos o realizar otras muchas tareas que podrían sernos útiles sin incrementar prácticamente el coste del dispositivo.
+* Con un simple Arduino, un sensor de CO<sub>2</sub> y unos led podemos construir un sistema simplificado que permita indicar cuando los niveles de CO<sub>2</sub> están dentro de unos determinado umbrales, esa fue mi primera idea y publicaré también esta versión; pero cambiando el Arduino por un ESP8266 o un ESP32 podemos además enviar los datos a un servidor y monitorizar por ejemplo los datos de distintas aulas de forma centralizada, almacenar datos estadísticos en una base de datos o realizar otras muchas tareas que podrían sernos útiles sin incrementar prácticamente el coste del dispositivo.
 
 ###BOM (Bill of materials) / Lista de materiales
 En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 - Un ESP32 por ejemplo el ESP32-DOIT-DEVKIT
-- Un sensor de CO2 CC811 (he probado tambiémn con otros sensores como el Sensirion SDC30 pero su coste es mucho más elevado)
+- Un sensor de CO<sub>2</sub> CC811 (he probado tambiémn con otros sensores como el Sensirion SDC30 pero su coste es mucho más elevado)
 - Opcionalmente un sensor de humedad, presión y temperatura BME280
-- Opcionalmente leds de varios colores por ejemplo rojo, naranja y verde para construir un "semáforo" que indique los niveles de CO2
+- Opcionalmente leds de varios colores por ejemplo rojo, naranja y verde para construir un "semáforo" que indique los niveles de CO<sub>2</sub>
 - Opcionalmente una pantalla OLED SSD1306 u otra
 
 Téngase en cuenta que los datos podrán visualizarse desde cualquier dispositivo conectado a la misma red que CODOS: el ordenador del profesor, una tablet o un móvil, incluso puede conectarse a Internet y enviar los datos a un servidor externo para que estos puedan visualizarse desde cualquier sitio, por lo que los elementos opcionales se utilizarán o no en función de las necesidades de cada caso.
@@ -58,4 +58,4 @@ He diseñado una caja imprimible en 3D para poder albergar el dispositivo aunque
 El ESP32 y los leds se puedem comprar en muchas tiendas físicas de electrónica en España o a través de Internet. En china por supuesto resulta mucho más económico; pero tardarás en tenerlo varias semanas.
 Los sensores son un poco más difíciles de localizar en tiendas físicas pero puedes adquirirlos igualmente en China o un poco más caros encontrarlos a través de ebay o Amazon.
 
-(este documento está en redacción)
+*(este documento está en redacción)*
