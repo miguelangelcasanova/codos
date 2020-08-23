@@ -117,11 +117,11 @@ void loop(){
             client.println("</style></head>");
             // Web Page Body
             client.println("<body><h1>CODOS</h1>");
-            client.println("<p>Sistema de medida de la calidad del aire y otros parámetros ambientales del aula</p>");
+            client.println("<p>Sistema de medida de la calidad del aire y otros par&#225;metros ambientales del aula</p>");
             client.println("<table><tr><th>Medida</th><th>Valor</th></tr>");
             client.println("<tr><td>Temp. Celsius</td><td><span class=\"sensor\">");
             client.println(BME280_sensor.readTemperature());
-            client.println(" *C</span></td></tr>");  
+            client.println(" &#176;C</span></td></tr>");  
             client.println("<tr><td>Presi&#243;n</td><td><span class=\"sensor\">");
             client.println(BME280_sensor.readPressure() / 100.0F);
             client.println(" hPa</span></td></tr>");
