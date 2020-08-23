@@ -38,6 +38,8 @@ En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 - Opcionalmente leds de varios colores por ejemplo rojo, naranja y verde para construir un "semáforo" que indique los niveles de CO<sub>2</sub>
 - Opcionalmente una pantalla OLED SSD1306 u otra
 
+![ESP32-DEVKITC](esp32-devkitc.jpg) ![ESP32-DEVKITC](esp32-devkitc.jpg) ![ESP32-DEVKITC](esp32-devkitc.jpg) ![ESP32-DEVKITC](esp32-devkitc.jpg) 
+
 Téngase en cuenta que los datos podrán visualizarse desde cualquier dispositivo conectado a la misma red que CODOS: el ordenador del profesor, una tablet o un móvil, incluso puede conectarse a Internet y enviar los datos a un servidor externo para que estos puedan visualizarse desde cualquier sitio, por lo que los elementos opcionales se utilizarán o no en función de las necesidades de cada caso.
 
 ![ESP32-DOIT-DEVKIT](img/ESP32-DOIT-DEVKIT-V1-Board-Pinout-36-GPIOs.png)
