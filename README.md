@@ -30,7 +30,7 @@ https://medium.com/@jjose_19945/how-to-quantify-the-ventilation-rate-of-an-indoo
 
 * Con un simple Arduino, un sensor de CO<sub>2</sub> y unos led podemos construir un sistema simplificado que permita indicar cuando los niveles de CO<sub>2</sub> están dentro de unos determinado umbrales, esa fue mi primera idea y publicaré también esta versión; pero cambiando el Arduino por un ESP8266 o un ESP32 podemos además enviar los datos a un servidor y monitorizar por ejemplo los datos de distintas aulas de forma centralizada, almacenar datos estadísticos en una base de datos o realizar otras muchas tareas que podrían sernos útiles sin incrementar prácticamente el coste del dispositivo.
 
-###BOM (Bill of materials) / Lista de materiales
+### BOM (Bill of materials) / Lista de materiales
 En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 - Un ESP32 por ejemplo el ESP32-DOIT-DEVKIT
 - Un sensor de CO<sub>2</sub> CC811 (he probado tambiémn con otros sensores como el Sensirion SDC30 pero su coste es mucho más elevado)
@@ -50,6 +50,11 @@ Para la conexión de los diodos led al tratarse de salidas de 3.3V deberíamos u
 
 ### El dispositivo
 He diseñado una caja imprimible en 3D para poder albergar el dispositivo aunque este puede montarse directamente sobre una placa de prototipos si no se tiene la habilidad para soldar unos cuantos componentes aunque su montaje debería resultar especialmente sencillo.
+
+#### Usando el dispositivo
+El dispositivo se conecta automáticamente a la red del aula para permitir que los datos de los sensores pueden visualizarse en una página web que genera el dispositivo desde cualquier otro dispositivo conectado a la misma red. Para ello debes averiguar la dirección IP del dispositivo y abrir en tu navegador una URL del tipo siguiente: http://192.168.1.105 dónde los números indican la dirección IP local del dispositivo en la red local. 
+
+![Web de CODOS](img/Codos.png)
 
 ### Preguntas frecuentes
 
