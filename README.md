@@ -42,7 +42,11 @@ En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 
 Téngase en cuenta que los datos podrán visualizarse desde cualquier dispositivo conectado a la misma red que CODOS: el ordenador del profesor, una tablet o un móvil, incluso puede conectarse a Internet y enviar los datos a un servidor externo para que estos puedan visualizarse desde cualquier sitio, por lo que los elementos opcionales se utilizarán o no en función de las necesidades de cada caso.
 
-![ESP32-DOIT-DEVKIT](img/ESP32-DOIT-DEVKIT-V1-Board-Pinout-36-GPIOs.png)
+![ESP32 Pinout](img/ESP32-DOIT-DEVKIT-V1-Board-Pinout-36-GPIOs.png)
+
+![BME280 Pinout](img/BME280-Pinout-Temperature-Humidity-Barometric-Pressure-Sensor.png)
+
+
 
 ### El circuito
 La conexión de los sensores es muy sencilla, tanto el sensor de CO<sub>2</sub> como el sensor ambiental utilizados utilizan conexiones i2c, es decir basta con alimentarlos a 3.3V y masa y conectar a los GPIO22 y GPIO21 que en el ESP32 corresponden a las conexiones SCL y SDA del mencionado protocolo respectivamente.
