@@ -8,6 +8,11 @@ CODOS AKA CO2
 #include <Adafruit_Sensor.h>            // Librería estándar para los sensores de Adafruit
 #include "SparkFunCCS811.h"             // Puedes descargar la librería para el sensor de CO2 en: http://librarymanager/All#SparkFun_CCS811
 
+
+#define CO2_sensor_present true         // Debe seleccionarse si este sensor está o no presente
+#define BME280_sensor_present true      // Debe seleccionarse si este sensor está o no presente
+#define OLED_SD
+
 #define CCS811_ADDR 0x5A                // Dirección i2c del sensor de CO2
 //#define CCS811_ADDR 0x5B                // Dirección i2c alternativa del sensor de CO2
 
@@ -128,10 +133,10 @@ void loop(){
             CO2_sensor.readAlgorithmResults();
             client.println("<tr><td>CO<sub>2</sub></td><td><span class=\"sensor\">");
             client.println(CO2_sensor.getCO2());
-            client.println(" %</span></td></tr>"); 
+            client.println(" ppm/span></td></tr>"); 
             client.println("<tr><td>TVOC</td><td><span class=\"sensor\">");
             client.println(CO2_sensor.getTVOC());
-            client.println(" %</span></td></tr>"); 
+            client.println(" ppb</span></td></tr>"); 
 //            }
             client.println("</body></html>");
             // The HTTP response ends with another blank line
