@@ -111,12 +111,13 @@ void loop(){
             client.println("tr { border: 1px solid #ddd; padding: 12px; }");
             client.println("tr:hover { background-color: #bcbcbc; }");
             client.println("td { border: none; padding: 12px; }");
-            client.println(".sensor { color:white; font-weight: bold; background-color: #bcbcbc; padding: 1px; }");
+            client.println(".sensor { color:blue; font-weight: bold; background-color: #ffffff; padding: 1px; }");
             
             // Web Page Heading
             client.println("</style></head>");
             // Web Page Body
             client.println("<body><h1>CODOS</h1>");
+            client.println("<p>Sistema de medida de la calidad del aire y otros parámetros ambientales del aula</p>");
             client.println("<table><tr><th>Medida</th><th>Valor</th></tr>");
             client.println("<tr><td>Temp. Celsius</td><td><span class=\"sensor\">");
             client.println(BME280_sensor.readTemperature());
@@ -133,7 +134,7 @@ void loop(){
             CO2_sensor.readAlgorithmResults();
             client.println("<tr><td>CO<sub>2</sub></td><td><span class=\"sensor\">");
             client.println(CO2_sensor.getCO2());
-            client.println(" ppm/span></td></tr>"); 
+            client.println(" ppm</span></td></tr>"); 
             client.println("<tr><td>TVOC</td><td><span class=\"sensor\">");
             client.println(CO2_sensor.getTVOC());
             client.println(" ppb</span></td></tr>"); 
