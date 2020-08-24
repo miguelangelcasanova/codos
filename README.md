@@ -33,12 +33,15 @@ https://medium.com/@jjose_19945/how-to-quantify-the-ventilation-rate-of-an-indoo
 ### BOM (Bill of materials) / Lista de materiales
 En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 - Un ESP32 por ejemplo el ESP32-DOIT-DEVKIT
-- Un sensor de CO<sub>2</sub> CC811 (he probado tambiémn con otros sensores como el Sensirion SDC30 pero su coste es mucho más elevado)
+- Un sensor de CO<sub>2</sub> CC811 (he probado también con otros sensores como el Sensirion SDC30 pero su coste es mucho más elevado)
+
+![ESP32-DEVKITC](img/esp32-devkitc.jpg) ![Sensor CO2 CC811](img/CCS811.jpg)
+
 - Opcionalmente un sensor de humedad, presión y temperatura BME280
 - Opcionalmente leds de varios colores por ejemplo rojo, naranja y verde para construir un "semáforo" que indique los niveles de CO<sub>2</sub>
 - Opcionalmente una pantalla OLED SSD1306 u otra
 
-![ESP32-DEVKITC](img/esp32-devkitc.jpg) ![Sensor CO2 CC811](img/CCS811.jpg) ![Sensor BME280](img/bme280.jpg) ![Diodos led](img/leds.jpg) ![OLED SSD1306](img/OLED-SSD1306.jpg) 
+ ![Sensor BME280](img/bme280.jpg) ![Diodos led](img/leds.jpg) ![OLED SSD1306](img/OLED-SSD1306.jpg) 
 
 Téngase en cuenta que los datos podrán visualizarse desde cualquier dispositivo conectado a la misma red que CODOS: el ordenador del profesor, una tablet o un móvil, incluso puede conectarse a Internet y enviar los datos a un servidor externo para que estos puedan visualizarse desde cualquier sitio, por lo que los elementos opcionales se utilizarán o no en función de las necesidades de cada caso.
 
