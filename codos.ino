@@ -21,14 +21,15 @@ y otras variables ambientales para monitorizar la calidad del aire en el aula
 //#define CCS811_ADDR 0x5B                // Dirección --i2c alternativa del sensor de CO2
 
 CCS811 CO2_sensor(CCS811_ADDR);   
-
+long int CO2_value;
+  
 #define BME280_ADDR 0x76                // Dirección i2c del sensor BME280
 
 Adafruit_BME280 BME280_sensor;       // Dirección i2c del sensor de humedad, presión y temperatura
 
-#define verde 25
-#define amarillo 26
-#define rojo 27
+#define verde 23
+#define amarillo 18
+#define rojo 13
 
 // Reemplaza los datos con el identificador de la red WIFI y la contraseña del aula
 //const char* ssid     = "NOMBRE_DE_TU_RED";
@@ -45,6 +46,8 @@ unsigned long currentTime = millis();
 unsigned long previousTime = 0; 
 // Define timeout time in milliseconds (example: 2000ms = 2s)
 const long timeoutTime = 2000;
+
+bool blink = true;
 
 void setup() {
   Serial.begin(115200);
@@ -92,9 +95,14 @@ void setup() {
   Serial.println("Dirección IP del servidor: ");
   Serial.println(WiFi.localIP());
   server.begin();
+  
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop(){
+  blink=!blink;
+  digitalWrite(LED_BUILTIN,blink);   // turn the LED on (HIGH is the voltage level)
   WiFiClient client = server.available();   // Listen for incoming clients
 
   if (client) {                             // If a new client connects,
@@ -121,6 +129,7 @@ void loop(){
             
             // Display the HTML web page
             client.println("<!DOCTYPE html><html>");
+            // Web Page Heading
             client.println("<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
             client.println("<link rel=\"icon\" href=\"data:,\">");
             // CSS to style the table 
@@ -131,9 +140,9 @@ void loop(){
             client.println("tr:hover { background-color: #bcbcbc; }");
             client.println("td { border: none; padding: 12px; }");
             client.println(".sensor { color:blue; font-weight: bold; background-color: #ffffff; padding: 1px; }");
-            
-            // Web Page Heading
-            client.println("</style></head>");
+            client.println("</style>");
+            client.println("<meta http-equiv=\"refresh\" content=\"1\">");
+            client.println("</head>");
             // Web Page Body
             client.println("<body><h1>CODOS</h1>");
             client.println("<p>Sistema de medida de la calidad del aire y otros par&#225;metros ambientales del aula</p>");
@@ -186,22 +195,24 @@ void loop(){
 }
 
 void traffic_lights(){
-  long int CO2_value = CO2_sensor.getCO2();
-  if (CO2_value <= 1000){
+  CO2_sensor.readAlgorithmResults();
+  CO2_value = CO2_sensor.getCO2();
+  Serial.println(CO2_value);
+  if (CO2_value <= 800){
     // Encender el led verde y apagar el resto
     Serial.println("Parece que el aula no necesita más ventilación de momento");
     digitalWrite(verde, HIGH);
     digitalWrite(amarillo, LOW);
     digitalWrite(rojo, LOW);
   } 
-  else if ((CO2_value > 1000) & (CO2_value < 3000)) {
+  if ((CO2_value > 800) & (CO2_value < 3000)) {
     // Encender el led amarillo y apagar el resto
     Serial.println("El aire del aula necesitará renovarse pronto");
     digitalWrite(verde, LOW);
     digitalWrite(amarillo, HIGH);
     digitalWrite(rojo, LOW);
   }
-  else if (CO2_value >= 3000){
+  if (CO2_value >= 3000){
     // Encender el led rojo y apagar el resto
     Serial.println("Habría que ventilar el aula");
     digitalWrite(verde, LOW);
