@@ -1,6 +1,9 @@
-/*********
+/*********************************************************************************
 CODOS AKA CO2 
-*********/
+Un sistema de bajo coste basado en ESP32 para la detección del CO2 
+y otras variables ambientales para monitorizar la calidad del aire en el aula
+(o en otros lugares de trabajo)
+*********************************************************************************/
 
 #include <WiFi.h>                       // Librería Wi-Fi
 #include <Wire.h>                       // Librería Wire para el soporte del protocolo i2c
