@@ -71,7 +71,7 @@ El dispositivo se conecta automáticamente a la red del aula para permitir que l
 
 **¿Dónde comprar los componentes?**
 
-El ESP32 y los leds se puedem comprar en muchas tiendas físicas de electrónica en España o a través de Internet. En china por supuesto resulta mucho más económico; pero tardarás en tenerlo varias semanas.
+El ESP32 y los leds se pueden comprar en muchas tiendas físicas de electrónica en España o a través de Internet. En China por supuesto resultan mucho más económico; pero tardarás en tenerlo varias semanas en tener los componentes en tus manos.
 Los sensores son un poco más difíciles de localizar en tiendas físicas pero puedes adquirirlos igualmente en China o un poco más caros encontrarlos a través de ebay o Amazon.
 
 *(este documento está en redacción)*
