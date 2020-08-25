@@ -14,7 +14,7 @@ y otras variables ambientales para monitorizar la calidad del aire en el aula
 
 #define CO2_sensor_present true         // Debe seleccionarse si este sensor está o no presente
 #define BME280_sensor_present true      // Debe seleccionarse si este sensor está o no presente
-#define OLED_SD
+#define OLED_present false              // Debe seleccionarse si la pantalla está o no presente
 
 #define CCS811_ADDR 0x5A                // Dirección i2c del sensor de CO2
 //#define CCS811_ADDR 0x5B                // Dirección i2c alternativa del sensor de CO2
@@ -122,26 +122,28 @@ void loop(){
             client.println("<body><h1>CODOS</h1>");
             client.println("<p>Sistema de medida de la calidad del aire y otros par&#225;metros ambientales del aula</p>");
             client.println("<table><tr><th>Medida</th><th>Valor</th></tr>");
-            client.println("<tr><td>Temp. Celsius</td><td><span class=\"sensor\">");
-            client.println(BME280_sensor.readTemperature());
-            client.println(" &#176;C</span></td></tr>");  
-            client.println("<tr><td>Presi&#243;n</td><td><span class=\"sensor\">");
-            client.println(BME280_sensor.readPressure() / 100.0F);
-            client.println(" hPa</span></td></tr>");
-            client.println("<tr><td>Humedad</td><td><span class=\"sensor\">");
-            client.println(BME280_sensor.readHumidity());
-            client.println(" %</span></td></tr>"); 
-
-//            if (CO2_sensor.dataAvailable())
-//           {            
-            CO2_sensor.readAlgorithmResults();
-            client.println("<tr><td>CO<sub>2</sub></td><td><span class=\"sensor\">");
-            client.println(CO2_sensor.getCO2());
-            client.println(" ppm</span></td></tr>"); 
-            client.println("<tr><td>TVOC</td><td><span class=\"sensor\">");
-            client.println(CO2_sensor.getTVOC());
-            client.println(" ppb</span></td></tr>"); 
-//            }
+            if (BME280_sensor_present){
+              client.println("<tr><td>Temp. Celsius</td><td><span class=\"sensor\">");
+              client.println(BME280_sensor.readTemperature());
+              client.println(" &#176;C</span></td></tr>");  
+              client.println("<tr><td>Presi&#243;n</td><td><span class=\"sensor\">");
+              client.println(BME280_sensor.readPressure() / 100.0F);
+              client.println(" hPa</span></td></tr>");
+              client.println("<tr><td>Humedad</td><td><span class=\"sensor\">");
+              client.println(BME280_sensor.readHumidity());
+              client.println(" %</span></td></tr>"); 
+            }
+            if (CO2_sensor_present){
+              if (CO2_sensor.dataAvailable()){            
+                CO2_sensor.readAlgorithmResults();
+                client.println("<tr><td>CO<sub>2</sub></td><td><span class=\"sensor\">");
+                client.println(CO2_sensor.getCO2());
+                client.println(" ppm</span></td></tr>"); 
+                client.println("<tr><td>TVOC</td><td><span class=\"sensor\">");
+                client.println(CO2_sensor.getTVOC());
+                client.println(" ppb</span></td></tr>"); 
+              }
+            }
             client.println("</body></html>");
             // The HTTP response ends with another blank line
             client.println();
