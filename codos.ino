@@ -5,8 +5,8 @@ y otras variables ambientales para monitorizar la calidad del aire en el aula
 (o en otros lugares de trabajo)
 *********************************************************************************/
 
-#include <WiFi.h>                       // Librería Wi-Fi
-#include <Wire.h>                       // Librería Wire para el soporte del protocolo i2c
+#include "Wire.h"                       // Librería Wire para el soporte del protocolo i2c
+#include "WiFi.h"                       // Librería Wi-Fi
 #include <Adafruit_BME280.h>            // Librería para el sensor BME280
 #include <Adafruit_Sensor.h>            // Librería estándar para los sensores de Adafruit
 #include <SparkFunCCS811.h>             // Puedes descargar la librería para el sensor de CO2 en: http://librarymanager/All#SparkFun_CCS811
@@ -16,7 +16,7 @@ y otras variables ambientales para monitorizar la calidad del aire en el aula
 #define OLED_present false              // Debe seleccionarse si la pantalla está o no presente
 
 #define CCS811_ADDR 0x5A                // Dirección i2c del sensor de CO2
-//#define CCS811_ADDR 0x5B                // Dirección i2c alternativa del sensor de CO2
+//#define CCS811_ADDR 0x5B                // Dirección --i2c alternativa del sensor de CO2
 
 CCS811 CO2_sensor(CCS811_ADDR);   
 
@@ -47,20 +47,22 @@ void setup() {
   Serial.println("Sensores CCS811 y BME280");
 
   Wire.begin(); //Inialize I2C Hardware
-
-  if (CO2_sensor.begin() == false)
-  {
-    Serial.print("Error: el sensor de CO2 CCS811 no se encuentra. Por favor, comprueba el cableado.");
-    while (1)
-      ;
-  }
   
-  delay(10);  
-  if (!BME280_sensor.begin(BME280_ADDR)) {
-    Serial.println("Error: el sensor de temperatura, presión y humedad BME280 no se encuentra. Por favor, comprueba el cableado.");
-    while (1);
+  if (CO2_sensor_present){
+    if (CO2_sensor.begin() == false)
+    {
+      Serial.print("Error: el sensor de CO2 CCS811 no se encuentra. Por favor, comprueba el cableado.");
+      while (1)
+        ;
+    }
+  }  
+  if (BME280_sensor_present){
+    delay(10);  
+    if (!BME280_sensor.begin(BME280_ADDR)) {
+      Serial.println("Error: el sensor de temperatura, presión y humedad BME280 no se encuentra. Por favor, comprueba el cableado.");
+      while (1);
+    }
   }
-
   // Conectar a la red  Wi-Fi con el SSID y la contraseña selecionadas
   Serial.print("Conectando a ");
   Serial.println(ssid);
