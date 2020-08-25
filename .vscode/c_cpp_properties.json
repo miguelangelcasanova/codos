@@ -3,6 +3,11 @@
         {
             "name": "Win32",
             "includePath": [
+                "C:\\Users\\Miguel Ángel\\Documents\\Arduino\\libraries\\SparkFun_CCS811_Arduino_Library\\src",
+                "C:\\Users\\Miguel Ángel\\Documents\\Arduino\\libraries\\Adafruit_BME280_Library",
+                "C:\\Users\\Miguel Ángel\\Documents\\Arduino\\libraries\\Adafruit_Unified_Sensor",
+                "C:\\Users\\Miguel Ángel\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.4\\libraries\\Wire\\src",
+                "C:\\Users\\Miguel Ángel\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.4\\libraries\\WiFi\\src",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\WiFi\\src",
                 "C:\\Users\\Miguel Ángel\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\**",
                 "C:\\Users\\Miguel Ángel\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.4\\**"

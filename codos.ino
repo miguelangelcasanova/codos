@@ -9,8 +9,7 @@ y otras variables ambientales para monitorizar la calidad del aire en el aula
 #include <Wire.h>                       // Librería Wire para el soporte del protocolo i2c
 #include <Adafruit_BME280.h>            // Librería para el sensor BME280
 #include <Adafruit_Sensor.h>            // Librería estándar para los sensores de Adafruit
-#include "SparkFunCCS811.h"             // Puedes descargar la librería para el sensor de CO2 en: http://librarymanager/All#SparkFun_CCS811
-
+#include <SparkFunCCS811.h>             // Puedes descargar la librería para el sensor de CO2 en: http://librarymanager/All#SparkFun_CCS811
 
 #define CO2_sensor_present true         // Debe seleccionarse si este sensor está o no presente
 #define BME280_sensor_present true      // Debe seleccionarse si este sensor está o no presente
