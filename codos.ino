@@ -11,9 +11,11 @@ y otras variables ambientales para monitorizar la calidad del aire en el aula
 #include <Adafruit_Sensor.h>            // Librería estándar para los sensores de Adafruit
 #include <SparkFunCCS811.h>             // Puedes descargar la librería para el sensor de CO2 en: http://librarymanager/All#SparkFun_CCS811
 
+
 #define CO2_sensor_present true         // Debe seleccionarse si este sensor está o no presente
 #define BME280_sensor_present true      // Debe seleccionarse si este sensor está o no presente
 #define OLED_present false              // Debe seleccionarse si la pantalla está o no presente
+#define traffic_lights_present true     // Debe seleccionarse si se conectará el semáforo o no (el sensor de CO2 debe estar presente también en ese caso)
 
 #define CCS811_ADDR 0x5A                // Dirección i2c del sensor de CO2
 //#define CCS811_ADDR 0x5B                // Dirección --i2c alternativa del sensor de CO2
@@ -23,6 +25,10 @@ CCS811 CO2_sensor(CCS811_ADDR);
 #define BME280_ADDR 0x76                // Dirección i2c del sensor BME280
 
 Adafruit_BME280 BME280_sensor;       // Dirección i2c del sensor de humedad, presión y temperatura
+
+#define verde 25
+#define amarillo 26
+#define rojo 27
 
 // Reemplaza los datos con el identificador de la red WIFI y la contraseña del aula
 //const char* ssid     = "NOMBRE_DE_TU_RED";
@@ -63,6 +69,15 @@ void setup() {
       while (1);
     }
   }
+
+  pinMode(verde, OUTPUT);
+  pinMode(amarillo, OUTPUT);
+  pinMode(rojo, OUTPUT);  
+  // Apagar los led al empezar
+  digitalWrite(verde, LOW);
+  digitalWrite(amarillo, LOW);
+  digitalWrite(rojo, LOW);
+
   // Conectar a la red  Wi-Fi con el SSID y la contraseña selecionadas
   Serial.print("Conectando a ");
   Serial.println(ssid);
@@ -140,6 +155,7 @@ void loop(){
                 client.println("<tr><td>CO<sub>2</sub></td><td><span class=\"sensor\">");
                 client.println(CO2_sensor.getCO2());
                 client.println(" ppm</span></td></tr>"); 
+                traffic_lights();
                 client.println("<tr><td>TVOC</td><td><span class=\"sensor\">");
                 client.println(CO2_sensor.getTVOC());
                 client.println(" ppb</span></td></tr>"); 
@@ -167,4 +183,29 @@ void loop(){
     Serial.println("");
   }
   delay(2000);
+}
+
+void traffic_lights(){
+  long int CO2_value = CO2_sensor.getCO2();
+  if (CO2_value <= 1000){
+    // Encender el led verde y apagar el resto
+    Serial.println("Parece que el aula no necesita más ventilación de momento");
+    digitalWrite(verde, HIGH);
+    digitalWrite(amarillo, LOW);
+    digitalWrite(rojo, LOW);
+  } 
+  else if ((CO2_value > 1000) & (CO2_value < 3000)) {
+    // Encender el led amarillo y apagar el resto
+    Serial.println("El aire del aula necesitará renovarse pronto");
+    digitalWrite(verde, LOW);
+    digitalWrite(amarillo, HIGH);
+    digitalWrite(rojo, LOW);
+  }
+  else if (CO2_value >= 3000){
+    // Encender el led rojo y apagar el resto
+    Serial.println("Habría que ventilar el aula");
+    digitalWrite(verde, LOW);
+    digitalWrite(amarillo, LOW);
+    digitalWrite(rojo, HIGH);
+  }
 }
