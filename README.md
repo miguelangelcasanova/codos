@@ -1,6 +1,6 @@
 # 💪CODOS💪
 
-## Un sistema de bajo coste basado en ESP32 para la detección del CO<sub>2</sub> para el aula y otras variables ambientales
+## Un sistema de bajo coste basado en ESP32 para la detección del CO<sub>2</sub> y otras variables ambientales para monitorizar la calidad del aire en el aula (o en otros lugares de trabajo)
 
 *"Algunos científicos comentan que mejorar la ventilación y la calidad del aire es un método que las escuelas pueden usar para reducir el riesgo de transmisión del coronavirus.
 Sin embargo, en una encuesta entre distritos escolares grandes del Norte de Texas, The Dallas Morning News encontró que las escuelas están lejos de alcanzar los parámetros de calidad del aire propuestos en junio por expertos en construcción.  
