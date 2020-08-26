@@ -18,7 +18,7 @@ y otras variables ambientales para monitorizar la calidad del aire en el aula
 #define traffic_lights_present true     // Debe seleccionarse si se conectará el semáforo o no (el sensor de CO2 debe estar presente también en ese caso)
 
 #define CCS811_ADDR 0x5A                // Dirección i2c del sensor de CO2
-//#define CCS811_ADDR 0x5B                // Dirección --i2c alternativa del sensor de CO2
+//#define CCS811_ADDR 0x5B                // Dirección i2c alternativa del sensor de CO2
 
 CCS811 CO2_sensor(CCS811_ADDR);   
 long int CO2_value;
