@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ESP32 Web Server</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <h1>CODOS</h1>");
+  <p>Sistema de medida de la calidad del aire y otros par&#225;metros ambientales del aula</p>
+  <p>GPIO state: <strong> %STATE%</strong></p>
+  <p><a href="/on"><button class="button">ON</button></a></p>
+  <p><a href="/off"><button class="button button2">OFF</button></a></p>
+  client.println("<table><tr><th>Medida</th><th>Valor</th></tr>");
+    if (BME280_sensor_present){
+      client.println("<tr><td>Temp. Celsius</td><td><span class=\"sensor\">");
+      client.println(BME280_sensor.readTemperature());
+      client.println(" &#176;C</span></td></tr>");  
+      client.println("<tr><td>Presi&#243;n</td><td><span class=\"sensor\">");
+      client.println(BME280_sensor.readPressure() / 100.0F);
+      client.println(" hPa</span></td></tr>");
+      client.println("<tr><td>Humedad</td><td><span class=\"sensor\">");
+      client.println(BME280_sensor.readHumidity());
+      client.println(" %</span></td></tr>"); 
+    }
+    if (CO2_sensor_present){
+      if (CO2_sensor.dataAvailable()){            
+        CO2_sensor.readAlgorithmResults();
+        client.println("<tr><td>CO<sub>2</sub></td><td><span class=\"sensor\">");
+        client.println(CO2_sensor.getCO2());
+        client.println(" ppm</span></td></tr>"); 
+        traffic_lights();
+        client.println("<tr><td>TVOC</td><td><span class=\"sensor\">");
+        client.println(CO2_sensor.getTVOC());
+        client.println(" ppb</span></td></tr>"); 
+      }
+    }
+</body>
+</html>
