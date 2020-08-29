@@ -1,9 +1,8 @@
 # 💪CODOS💪
 
-## Un sistema de bajo coste basado en ESP32 para la detección del CO<sub>2</sub> y otras variables ambientales para monitorizar la calidad del aire en el aula (o en otros lugares de trabajo)
+## Un sistema de bajo coste basado en ESP8266/ESP32 para la detección del CO<sub>2</sub> y otras variables ambientales para monitorizar la calidad del aire en el aula (o en otros lugares de trabajo)
 
 *(Este documento está en constante redacción)*
-
 
 *"Algunos científicos comentan que mejorar la ventilación y la calidad del aire es un método que las escuelas pueden usar para reducir el riesgo de transmisión del coronavirus.
 Sin embargo, en una encuesta entre distritos escolares grandes del Norte de Texas, The Dallas Morning News encontró que las escuelas están lejos de alcanzar los parámetros de calidad del aire propuestos en junio por expertos en construcción.  
@@ -60,7 +59,23 @@ Téngase en cuenta que los datos podrán visualizarse desde cualquier dispositiv
 
 ![BME280 Pinout](img/BME280-Pinout-Temperature-Humidity-Barometric-Pressure-Sensor.png)
 
+## Cómo se monta
 
+### Versión Arduino
+
+Vamos a exponer primero de forma sencilla cómo se conecta el sensor de CO<sub>2</sub> CSS811 a un Arduino Nano, esta versión es la más económica y sencilla del dispositivo. Simplemente hemos de utilizar 5 cables Dupont hembra-hembra y unir los siguientes pines del sensor a otros tantos pines del Arduino:
+
+- Vcc con un cable rojo lo uniremos al pin de 3.3V del Arduino
+- GND con un cable negro lo uniremos a uno de los pines GND del Arduino
+- SDA se conecta al pin A4 del Arduino
+- SCL se conecta al pin A5 del Arduino
+- AWake se conecta al otro pin GND del Arduino.
+
+![Arduino Nano Pinout](img/arduino-nano-pinout.jpg)
+
+Luego simplemente hemos de conectar un cable USB y podremos programar el Arduino con el código necesario para poder leer los datos del sensor. 
+
+En esta versión del dispositivo los datos sólo pueden monitorizarse a través de un ordenador conectado mediante dicho cable USB, por eso en la versión definitiva utilizaremos un ESP8266 o un ESP32 que funcionan de forma similar pero permiten además enviar los datos vía WiFi y en el caso del ESP32 también vía Bluetooth.
 
 ### El circuito
 La conexión de los sensores es muy sencilla, tanto el sensor de CO<sub>2</sub> como el sensor ambiental utilizados utilizan conexiones i2c, es decir basta con alimentarlos a 3.3V y masa y conectar a los GPIO22 y GPIO21 que en el ESP32 corresponden a las conexiones SCL y SDA del mencionado protocolo respectivamente.
