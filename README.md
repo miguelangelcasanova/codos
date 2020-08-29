@@ -43,21 +43,17 @@ CODOS es un guiño a hincar los "CO2" en el aula... ;)
 ### BOM (Bill of materials) / Lista de materiales
 En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 - Un ESP32 por ejemplo el ESP32-DOIT-DEVKIT
+![ESP32-DEVKITC](img/esp32-devkitc.jpg) 
 - Un sensor de CO<sub>2</sub> CC811 (he probado también con otros sensores como el Sensirion SDC30 pero su coste es mucho más elevado)
-
-![ESP32-DEVKITC](img/esp32-devkitc.jpg) ![Sensor CO2 CC811](img/CCS811.jpg)
+![Sensor CO2 CC811](img/CCS811.jpg) ![Sensor CO2 CC811](img/CCS811.png)
 
 - Opcionalmente un sensor de humedad, presión y temperatura BME280
+![Sensor BME280](img/bme280.jpg)
+
 - Opcionalmente leds de varios colores por ejemplo rojo, naranja y verde para construir un "semáforo" que indique los niveles de CO<sub>2</sub>
-- Opcionalmente una pantalla OLED SSD1306 u otra
-
- ![Sensor BME280](img/bme280.jpg) ![Diodos led](img/leds.jpg) ![OLED SSD1306](img/OLED-SSD1306.jpg) 
-
-Téngase en cuenta que los datos podrán visualizarse desde cualquier dispositivo conectado a la misma red que CODOS: el ordenador del profesor, una tablet o un móvil, incluso puede conectarse a Internet y enviar los datos a un servidor externo para que estos puedan visualizarse desde cualquier sitio, por lo que los elementos opcionales se utilizarán o no en función de las necesidades de cada caso.
-
-![ESP32 Pinout](img/ESP32-DOIT-DEVKIT-V1-Board-Pinout-36-GPIOs.png)
-
-![BME280 Pinout](img/BME280-Pinout-Temperature-Humidity-Barometric-Pressure-Sensor.png)
+![Diodos led](img/leds.jpg)
+- Opcionalmente una pantalla OLED SSD1306 u otra (o un ESP32 que la incluya)
+![OLED SSD1306](img/OLED-SSD1306.jpg) 
 
 ## Cómo se monta
 
@@ -77,23 +73,31 @@ Luego simplemente hemos de conectar un cable USB y podremos programar el Arduino
 
 En esta versión del dispositivo los datos sólo pueden monitorizarse a través de un ordenador conectado mediante dicho cable USB, por eso en la versión definitiva utilizaremos un ESP8266 o un ESP32 que funcionan de forma similar pero permiten además enviar los datos vía WiFi y en el caso del ESP32 también vía Bluetooth.
 
-### El circuito
-La conexión de los sensores es muy sencilla, tanto el sensor de CO<sub>2</sub> como el sensor ambiental utilizados utilizan conexiones i2c, es decir basta con alimentarlos a 3.3V y masa y conectar a los GPIO22 y GPIO21 que en el ESP32 corresponden a las conexiones SCL y SDA del mencionado protocolo respectivamente.
+### Version ESP32
+
+La conexión de los sensores es muy sencilla, tanto el sensor de CO<sub>2</sub> como el sensor ambiental utilizados utilizan conexiones i2c, es decir basta con alimentarlos a 3.3V y masa y conectar a los GPIO22 y GPIO21 que en el ESP32 corresponden a las conexiones SCL y SDA del mencionado protocolo respectivamente. Si deseas conectar la pantalla OLED se conecta también en estos mismos pines.
+Dado que podemos utilizar dos pines para conectar varios sensores o la pantalla necesitaremos utilizar una placa de prototipos o diseñar una placa de circuito impreso para conectarlos todos en el mismo punto.
+
 Para la conexión de los diodos led al tratarse de salidas de 3.3V deberíamos utilizar resistencias limitadoras de corriente y conectarlos a través de estas a cualquiera de los GPIO, yo he escogido los GPIO9, 10 y 11. Al conectar los diodos led hemos de tener en cuenta su polaridad.
 
-### El código
+### El programa
+También he diseñado varias versiones del programa según la plataforma utilizada. 
+El programa debe cargarse desde el entorno IDE de Arduino o desde VS Studio Code en la placa correspondiente.
 
 ### El dispositivo
 He diseñado una caja imprimible en 3D para poder albergar el dispositivo aunque este puede montarse directamente sobre una placa de prototipos si no se tiene la habilidad para soldar unos cuantos componentes aunque su montaje debería resultar especialmente sencillo.
 
-#### Usando el dispositivo
+### Usando el dispositivo
 El dispositivo se conecta automáticamente a la red del aula para permitir que los datos de los sensores pueden visualizarse en una página web que genera el dispositivo desde cualquier otro dispositivo conectado a la misma red. Para ello debes averiguar la dirección IP del dispositivo y abrir en tu navegador una URL del tipo siguiente: http://192.168.1.105 dónde los números indican la dirección IP local del dispositivo en la red local. 
 
-![Web de CODOS](img/Codos.png)
+![CODOS](img/Codos.png)
 
 ### Preguntas frecuentes
 
-**¿Dónde comprar los componentes?**
+#### ¿Cuál es el objetivo del proyecto?
+Dotar a las aulas y otros espacios de trabajo de una forma sencilla y económica de medir la calidad del aire, en concreto de la concentración de CO<sub>2</sub> 
+
+#### ¿Dónde comprar los componentes?
 
 El ESP32 y los leds se pueden comprar en muchas tiendas físicas de electrónica en España o a través de Internet. En China por supuesto resultan mucho más económico; pero tardarás en tenerlo varias semanas en tener los componentes en tus manos.
 Los sensores son un poco más difíciles de localizar en tiendas físicas pero puedes adquirirlos igualmente en China o un poco más caros encontrarlos a través de ebay o Amazon.
@@ -109,6 +113,10 @@ En ebay y en Amazon hay muchas tiendas que te ofrecen el sensor de CO2 o el de h
 https://www.ebay.es/itm/CCS811-Carbon-Monoxide-CO-VOCs-Air-Quality-Numerical-Gas-Sensors-CJMCU-811/323688562130
 
 https://www.amazon.es/TECNOIOT-Monoxide-Quality-Numerical-CJMCU-811/dp/B07RGLMS1J
+
+Este es otro modelo que resulta también muy económico:
+
+https://www.amazon.es/KEYESTUDIO-Quality-Arduino-Monoxide-Numeric/dp/B086HCSM6N/ref=sr_1_1?__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&dchild=1&keywords=ccs811&qid=1598700075&refinements=p_85%3A831314031&rnid=831276031&rps=1&sr=8-1
 
 Comprando 5 unidades del ESP32 te salen a 6€ en el siguiente enlace:
 
