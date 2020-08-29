@@ -95,7 +95,8 @@ El dispositivo se conecta automáticamente a la red del aula para permitir que l
 ### Preguntas frecuentes
 
 #### ¿Cuál es el objetivo del proyecto?
-Dotar a las aulas y otros espacios de trabajo de una forma sencilla y económica de medir la calidad del aire, en concreto de la concentración de CO<sub>2</sub> 
+Dotar a las aulas y otros espacios de trabajo de una forma sencilla y económica 
+de medir la calidad del aire, en concreto de la concentración de CO<sub>2</sub> 
 
 #### ¿Dónde comprar los componentes?
 
