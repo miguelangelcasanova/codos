@@ -63,7 +63,7 @@ Téngase en cuenta que los datos podrán visualizarse desde cualquier dispositiv
 
 ### Versión Arduino
 
-Vamos a exponer primero de forma sencilla cómo se conecta el sensor de CO<sub>2</sub> CSS811 a un Arduino Nano, esta versión es la más económica y sencilla del dispositivo. Simplemente hemos de utilizar 5 cables Dupont hembra-hembra y unir los siguientes pines del sensor a otros tantos pines del Arduino:
+Vamos a exponer primero de forma sencilla cómo se conecta el sensor de CO<sub>2</sub> CSS811 a un Arduino Nano o UNO, esta versión es la más económica y sencilla del dispositivo. Simplemente hemos de utilizar 5 cables Dupont hembra-hembra o macho-hembra respectivamente y unir los siguientes pines del sensor a otros tantos pines del Arduino:
 
 - Vcc con un cable rojo lo uniremos al pin de 3.3V del Arduino
 - GND con un cable negro lo uniremos a uno de los pines GND del Arduino
@@ -71,7 +71,7 @@ Vamos a exponer primero de forma sencilla cómo se conecta el sensor de CO<sub>2
 - SCL se conecta al pin A5 del Arduino
 - AWake se conecta al otro pin GND del Arduino.
 
-![Arduino Nano Pinout](img/arduino-nano-pinout.jpg)
+![Conexión del sensor CSS811 al Arduino](img/arduino-css811-conexion.jpg)
 
 Luego simplemente hemos de conectar un cable USB y podremos programar el Arduino con el código necesario para poder leer los datos del sensor. 
 
