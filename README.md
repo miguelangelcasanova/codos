@@ -52,8 +52,15 @@ En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 
 - Opcionalmente leds de varios colores por ejemplo rojo, naranja y verde para construir un "semáforo" que indique los niveles de CO<sub>2</sub>
 ![Diodos led](img/leds.jpg)
+
 - Opcionalmente una pantalla OLED SSD1306 u otra (o un ESP32 que la incluya)
 ![OLED SSD1306](img/OLED-SSD1306.jpg) 
+
+- Necesitarás además cables dupont para conectar entre sí los distintos elementos.
+![Cables Dupont](img/cables-dupont.jpg)
+
+- Para alimentar el dispositivo podrás utilizar el puerto USB de un ordenador o mejor un cargador de móvil con conexión microUSB para los ESP o el que corresponga para el Arduino
+![Cargador de móvil](img/cargador.jpg)
 
 ## Cómo se monta
 
