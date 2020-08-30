@@ -173,6 +173,7 @@ void loop(){
                 client.println(" ppb</span></td></tr>"); 
               }
             }
+            client.println("</table>");
             client.println("<br/><br/>");
             client.println("<a href='https://es.wikipedia.org/wiki/CO2_equivalente' target='_blank'>¿Qué es el eCO<sub>2</sub>?</a>");
             client.println("<a href='https://es.wikipedia.org/wiki/Compuestos_org%C3%A1nicos_vol%C3%A1tiles' target='_blank'>¿Qué significa TVOC?</a>");
