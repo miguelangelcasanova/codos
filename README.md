@@ -82,7 +82,9 @@ Vamos a exponer primero de forma sencilla cómo se conecta el sensor de CO<sub>2
 - SCL se conecta al pin A5 del Arduino
 - AWake se conecta al otro pin GND del Arduino.
 
-![Conexión del sensor CSS811 al Arduino](img/arduino-css811-conexiones.jpg) Conexión del sensor CSS811 a un Arduino UNO
+![Conexión del sensor CSS811 al Arduino](img/arduino-css811-conexiones.jpg) 
+
+Conexión del sensor CSS811 a un Arduino UNO
 
 Luego simplemente hemos de conectar un cable USB y podremos programar el Arduino con el código necesario para poder leer los datos del sensor.
 
