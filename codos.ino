@@ -23,8 +23,8 @@ y otras variables ambientales para monitorizar la calidad del aire en el aula
 CCS811 CO2_sensor(CCS811_ADDR);   
 long int CO2_value;
 
-const CO2_safe_level 2000               // Especificar un valor máximo de CO2 seguro
-const CO2_alarm_level 3000              // Especificar un valor máximo de CO2 de alarma 
+const int CO2_safe_level = 2000;        // Se debe especificar un valor máximo de CO2 seguro
+const int CO2_alarm_level = 3000;       // Se debe especificar un valor máximo de CO2 de alarma 
 
 #define BME280_ADDR 0x76                // Dirección i2c del sensor BME280
 
