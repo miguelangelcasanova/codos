@@ -22,10 +22,13 @@ y otras variables ambientales para monitorizar la calidad del aire en el aula
 
 CCS811 CO2_sensor(CCS811_ADDR);   
 long int CO2_value;
-  
+
+const CO2_safe_level 2000               // Especificar un valor máximo de CO2 seguro
+const CO2_alarm_level 3000              // Especificar un valor máximo de CO2 de alarma 
+
 #define BME280_ADDR 0x76                // Dirección i2c del sensor BME280
 
-Adafruit_BME280 BME280_sensor;       // Dirección i2c del sensor de humedad, presión y temperatura
+Adafruit_BME280 BME280_sensor;          // Dirección i2c del sensor de humedad, presión y temperatura
 
 #define verde 23
 #define amarillo 18
@@ -198,21 +201,21 @@ void traffic_lights(){
   CO2_sensor.readAlgorithmResults();
   CO2_value = CO2_sensor.getCO2();
   Serial.println(CO2_value);
-  if (CO2_value <= 800){
+  if (CO2_value <= CO2_safe_level){
     // Encender el led verde y apagar el resto
     Serial.println("Parece que el aula no necesita más ventilación de momento");
     digitalWrite(verde, HIGH);
     digitalWrite(amarillo, LOW);
     digitalWrite(rojo, LOW);
   } 
-  if ((CO2_value > 800) & (CO2_value < 3000)) {
+  if ((CO2_value > CO2_safe_level) & (CO2_value < CO2_alarm_level)) {
     // Encender el led amarillo y apagar el resto
     Serial.println("El aire del aula necesitará renovarse pronto");
     digitalWrite(verde, LOW);
     digitalWrite(amarillo, HIGH);
     digitalWrite(rojo, LOW);
   }
-  if (CO2_value >= 3000){
+  if (CO2_value >= CO2_alarm_level){
     // Encender el led rojo y apagar el resto
     Serial.println("Habría que ventilar el aula");
     digitalWrite(verde, LOW);

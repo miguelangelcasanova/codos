@@ -15,19 +15,19 @@
 	  GetTVOC();
 	}, 2000);
 
-	function GetCO2() {
+	function GeteO2() {
 	  var xhttp = new XMLHttpRequest();
-          var CO2=0;
+          var eCO2=0;
 	  xhttp.onreadystatechange = function() {
-	    if (this.readyState == 4 && this.status == 200) {
-		CO2 = Number(this.responseText);
+	    if (this.readyState == 4 && this.url == "geteCO2" && this.status == 200) {
+		eCO2 = Number(this.responseText);
 	      	gauges.forEach(function (gauge) {			
-			console.log(CO2)
+			console.log(eCO2)
 	    		gauge.write(CO2);
 	  		});
 	    }
 	  };
-	  xhttp.open("GET", "/getCO2", false);
+	  xhttp.open("GET", "/geteCO2", false);
 	  xhttp.send();
 	}
 
@@ -35,7 +35,7 @@
 	  var xhttp = new XMLHttpRequest();
           var TVOC=0;
 	  xhttp.onreadystatechange = function() {
-	    if (this.readyState == 4 && this.status == 200) {
+	    if (this.readyState == 4 && this.url == "getTVOC" && this.status == 200) {
 		TVOC = Number(this.responseText);
 	      	gauges.forEach(function (gauge) {			
 			console.log(TVOC)

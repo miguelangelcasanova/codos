@@ -13,6 +13,8 @@ const char* htmlfile = "/index.html";
 //WiFi Connection configuration
 //const char *ssid = "NOMBRE_DE_TU_RED_WIFI";
 //const char *password = "CLAVE_DE_TU_RED_WIFI";
+const char* ssid     = "MOVISTAR_4B56";
+const char* password = "C7H3bxsmLdfn6GaJzZcN";
 
 ESP8266WebServer server(80);
 
@@ -59,12 +61,12 @@ void setup() {
 
   //Initialize File System
   SPIFFS.begin();
-  Serial.println("File System Initialized");
+  Serial.println("Inicializando el sistema de archivos");
 
   
   //Connect to wifi Network
   WiFi.begin(ssid, password);     //Connect to your WiFi router
-  Serial.println("");
+  Serial.println("Conectando a la red WiFi");
 
   // Wait for connection
   while (WiFi.status() != WL_CONNECTED) {
@@ -74,14 +76,14 @@ void setup() {
 
   //If connection successful show IP address in serial monitor
   Serial.println("");
-  Serial.print("Connected to ");
+  Serial.print("Conectado a ");
   Serial.println(ssid);
-  Serial.print("IP address: ");
+  Serial.print("Dirección IP del dispositivo: ");
   Serial.println(WiFi.localIP());  //IP address assigned to your ESP
 
   //Start mDNS
-  if (MDNS.begin("aulaXXX")) { 
-    Serial.println("MDNS started");
+  if (MDNS.begin("aula001")) { 
+    Serial.println("mDNS started");
   }
 
   //Initialize Webserver
