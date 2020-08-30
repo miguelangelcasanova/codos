@@ -38,6 +38,7 @@ Adafruit_BME280 BME280_sensor;          // Dirección i2c del sensor de humedad,
 //const char* ssid     = "NOMBRE_DE_TU_RED";
 //const char* password = "CLAVE_DE_TU_RED";
 
+
 WiFiServer server(80);                  // Seleccionar el puerto del servidor Web
 
 // Variable to store the HTTP request
@@ -175,8 +176,8 @@ void loop(){
             }
             client.println("</table>");
             client.println("<br/><br/>");
-            client.println("<a href='https://es.wikipedia.org/wiki/CO2_equivalente' target='_blank'>¿Qué es el eCO<sub>2</sub>?</a>");
-            client.println("<a href='https://es.wikipedia.org/wiki/Compuestos_org%C3%A1nicos_vol%C3%A1tiles' target='_blank'>¿Qué significa TVOC?</a>");
+            client.println("<a href='https://es.wikipedia.org/wiki/CO2_equivalente' target='_blank'>&#191;Qu&#233; es el eCO<sub>2</sub>?</a> ");
+            client.println("<a href='https://es.wikipedia.org/wiki/Compuestos_org%C3%A1nicos_vol%C3%A1tiles' target='_blank'>&#191;Qu&#233; significa TVOC?</a>");
             client.println("</body></html>");
             // The HTTP response ends with another blank line
             client.println();
