@@ -33,7 +33,11 @@ Este enlace https://schools.forhealth.org/ventilation-guide/ nos dice también c
 
 ## ¿Qué es 💪CODOS💪?
 
-💪CODOS💪 es un pequeño circuito electrónico construido sobre un microcontrolador ESP32, un microcontrolador similar a un Arduino pero que ofrece conectividad WiFi y Bluetooth. Esto lo convierte en un dispositivo de Internet de las Cosas, (IoT) lo que nos permite monitorizar los datos de los sensores conectados al mismo a través de Internet. El dispositivo está pensado para medir la cantidad de CO<sub>2</sub> y otros parámetros ambientales para recomendarnos cuando deberíamos renovar el aire de un aula cuando no se disponga de un sistema de ventilación forzada, o bien no sea posible mantener las ventanas abiertas todo el tiempo.
+💪CODOS💪 es un pequeño circuito electrónico construido sobre un microcontrolador ESP32, un microcontrolador similar a un Arduino pero que ofrece conectividad WiFi y Bluetooth, aunque también hay otros Arduinos como el MKR1000 WiFi que te podrían servir.
+
+Esto significa que podemos usar dispositivos de [Internet de las Cosas, (IoT)](https://es.wikipedia.org/wiki/Internet_de_las_cosas) que nos permiten monitorizar los datos de los sensores conectados a los mismos a través de Internet.
+
+CODOS está pensado para medir la cantidad de CO<sub>2</sub> y otros parámetros ambientales para recomendarnos cuando deberíamos renovar el aire de un aula u otro espacio de trabajo, sobre todo cuando no se disponga de un sistema de ventilación forzada, o bien no sea posible mantener las ventanas abiertas todo el tiempo.
 
 ![CODOS es un guiño a hincar los codos en el aula...](img/school_1810350a1-1.jpg)
 
