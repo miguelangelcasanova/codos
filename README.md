@@ -126,7 +126,7 @@ Para la conexión de los diodos led al tratarse de salidas de 3.3V deberíamos u
 También he diseñado varias versiones del programa según la plataforma utilizada. 
 El programa debe cargarse desde el entorno IDE de Arduino o desde VS Studio Code en la placa correspondiente.
 
-### El dispositivo
+### El dispositivo 
 He diseñado una caja imprimible en 3D para poder albergar el dispositivo aunque este puede montarse directamente sobre una placa de prototipos si no se tiene la habilidad para soldar unos cuantos componentes aunque su montaje debería resultar especialmente sencillo.
 
 ### Usando el dispositivo
