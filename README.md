@@ -80,7 +80,7 @@ Vamos a exponer primero de forma sencilla cómo se conecta el sensor de CO<sub>2
 - **GND** con un cable negro lo uniremos a uno de los pines GND del Arduino
 - **SDA** se conecta al pin A4 del Arduino
 - **SCL** se conecta al pin A5 del Arduino
-- **Wake** o **AWake** se conecta al otro pin GND del Arduino.
+- **Wake** o **AWake** se conecta al otro pin GND del Arduino, aunque también podría controlarse con pin de salida.
 
 ![Conexión del sensor CSS811 al Arduino](img/arduino-css811-conexiones.jpg) 
 
@@ -106,7 +106,9 @@ Descarga el archivo, envía el firmware al Arduino y abre el monitor serie o mej
 
 ### Version ESP8266 / ESP32
 
-La conexión de los sensores es muy similar a la que hemos descrito para el arduino y es también muy sencilla, tanto el sensor de CO<sub>2</sub> como el sensor ambiental utilizados utilizan conexiones i2c, es decir basta con alimentarlos a 3.3V y masa. Luego hay que conectar a los GPIO22 y GPIO21 que en el ESP32 corresponden a las conexiones SCL y SDA del mencionado protocolo respectivamente o a los pines D2 y D1 que corresponden igualmente a SDA y SCL para el ESP8266. Si deseas conectar la pantalla OLED o el sensor ambiental BME280, se conectan también en estos mismos pines en ambos casos.
+La conexión de los sensores es muy similar a la que hemos descrito para el arduino y es también muy sencilla, tanto el sensor de CO<sub>2</sub> como el sensor ambiental utilizados utilizan conexiones i2c, es decir basta con alimentarlos a 3.3V y masa. Luego hay que conectar a los **GPIO22** y **GPIO21** que en el ESP32 corresponden a las conexiones SCL y SDA del mencionado protocolo respectivamente o a los pines **D2** y **D1** que corresponden igualmente a SDA y SCL para el ESP8266. 
+
+Si deseas conectar la pantalla OLED o el sensor ambiental BME280, se conectan también en estos mismos pines en ambos casos.
 
 ![Pinout del ESP8266](img/ESP8266-pinout.png)
 *Pinout del ESP8266*
@@ -131,6 +133,7 @@ He diseñado una caja imprimible en 3D para poder albergar el dispositivo aunque
 El dispositivo se conecta automáticamente a la red del aula para permitir que los datos de los sensores pueden visualizarse en una página web que genera el dispositivo desde cualquier otro dispositivo conectado a la misma red. Para ello debes averiguar la dirección IP del dispositivo y abrir en tu navegador una URL del tipo siguiente: http://192.168.1.105 dónde los números indican la dirección IP local del dispositivo en la red local. 
 
 ![CODOS](img/Codos.png)
+
 *Pantalla de datos de las primeras versiones de CODOS*
 
 ### Preguntas frecuentes
