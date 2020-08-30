@@ -104,9 +104,10 @@ Monitor serie del IDE de Arduino
 
 Serial Plotter del IDE de Arduino
 
-### Version ESP32
+### Version ESP8266 / ESP32
 
-La conexión de los sensores es muy similar a la que hemos descrito para el arduino y es también muy sencilla, tanto el sensor de CO<sub>2</sub> como el sensor ambiental utilizados utilizan conexiones i2c, es decir basta con alimentarlos a 3.3V y masa y conectar a los GPIO22 y GPIO21 que en el ESP32 corresponden a las conexiones SCL y SDA del mencionado protocolo respectivamente. Si deseas conectar la pantalla OLED se conecta también en estos mismos pines.
+La conexión de los sensores es muy similar a la que hemos descrito para el arduino y es también muy sencilla, tanto el sensor de CO<sub>2</sub> como el sensor ambiental utilizados utilizan conexiones i2c, es decir basta con alimentarlos a 3.3V y masa. Luego hay que conectar a los GPIO22 y GPIO21 que en el ESP32 corresponden a las conexiones SCL y SDA del mencionado protocolo respectivamente o a los pines D2 y D1 que corresponden igualmente a SDA y SCL para el ESP8266. Si deseas conectar la pantalla OLED o el sensor ambiental BME280, se conectan también en estos mismos pines en ambos casos.
+
 Dado que podemos utilizar dos pines para conectar varios sensores o la pantalla necesitaremos utilizar una placa de prototipos o diseñar una placa de circuito impreso para conectarlos todos en el mismo punto.
 
 ![Conexión del sensor CSS811 con una placa protoboard](img/protoboard.jpg) Conexión del sensor CSS811 a un ESP con una placa protoboard
