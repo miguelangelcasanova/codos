@@ -48,7 +48,7 @@ En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 ![ESP32-DEVKITC](img/esp32-devkitc.jpg) 
 - Un sensor de CO<sub>2</sub> CC811 (he probado también con otros sensores como el Sensirion SDC30 pero su coste es mucho más elevado)
 
-![Sensor CO2 CC811](img/CCS811.jpg) ![Sensor CO2 CC811](img/CCS811.png)
+![Sensor CO2 CC811](img/CCS811.jpg) ![Sensor CO2 CC811](img/sensor-CCS811.png)
 
 - Opcionalmente un sensor de humedad, presión y temperatura BME280
 
