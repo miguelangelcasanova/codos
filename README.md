@@ -94,7 +94,13 @@ En esta versión del dispositivo los datos sólo pueden monitorizarse a través 
 
 Descarga el archivo, envía el firmware al Arduino y abre el monitor serie o mejor el plotter serie y podrás visualizar los valores del sensor:
 
+![Monitor serie del IDE de Arduino con los valores medidos del sensor](img/monitor-serie.png)
+
+Monitor serie del IDE de Arduino
+
 ![Serial Plotter del IDE de Arduino con los valores medidos del sensor](img/serial-plotter.png)
+
+Serial Plotter del IDE de Arduino
 
 ### Version ESP32
 
