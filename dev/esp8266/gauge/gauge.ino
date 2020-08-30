@@ -11,18 +11,24 @@ a partir de un ejemplo de https://circuits4you.com
 const char* htmlfile = "/index.html";
 
 //WiFi Connection configuration
-const char *ssid = "NOMBRE_DE_TU_RED";
-const char *password = "CLAVE_DE_TU_REDord";
+const char *ssid = "NOMBRE_DE_TU_RED_WIFI";
+const char *password = "CLAVE_DE_TU_RED_WIFI";
 
 
 ESP8266WebServer server(80);
 
-void handleADC(){
-  int a = analogRead(A0);
-  a = map(a,0,1023,0,100);
-  String adc = String(a);
-  Serial.println(adc);
-  server.send(200, "text/plane",adc);
+void handleeCO2(){
+  long int eCO2_value = 400;
+  String eCO2 = String(eCO2);
+  Serial.println(eCO2);
+  server.send(200, "text/plane",CO2);
+}
+
+void handleTVOC(){
+  long int TVOC_value = 0;
+  String TVOC = String(TVOC_value);
+  Serial.println(TVOC);
+  server.send(200, "text/plane",TVOC);
 }
 
 void handleRoot(){
@@ -75,13 +81,14 @@ void setup() {
   Serial.println(WiFi.localIP());  //IP address assigned to your ESP
 
   //Start mDNS
-  if (MDNS.begin(“aulaXXX”)) { 
-    Serial.println(“MDNS started”);
+  if (MDNS.begin("aulaXXX")) { 
+    Serial.println("MDNS started");
   }
 
   //Initialize Webserver
   server.on("/",handleRoot);
-  server.on("/getADC",handleADC); //Reads ADC function is called from out index.html
+  server.on("/geteCO2",handleeCO2); //Reads eCO2 function is called from out index.html
+  server.on("/getTVOC",handleTVOC); //Reads TVOC function is called from out index.html
   server.onNotFound(handleWebRequests); //Set setver all paths are not found so we can handle as per URI
   server.begin();  
 }
