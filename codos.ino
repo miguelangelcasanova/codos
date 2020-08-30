@@ -164,7 +164,7 @@ void loop(){
             if (CO2_sensor_present){
               if (CO2_sensor.dataAvailable()){            
                 CO2_sensor.readAlgorithmResults();
-                client.println("<tr><td>CO<sub>2</sub></td><td><span class=\"sensor\">");
+                client.println("<tr><td>eCO<sub>2</sub></td><td><span class=\"sensor\">");
                 client.println(CO2_sensor.getCO2());
                 client.println(" ppm</span></td></tr>"); 
                 traffic_lights();
@@ -173,6 +173,9 @@ void loop(){
                 client.println(" ppb</span></td></tr>"); 
               }
             }
+            client.println("<br/><br/>");
+            client.println("<a href='https://es.wikipedia.org/wiki/CO2_equivalente' target='_blank'>¿Qué es el eCO<sub>2</sub>?</a>");
+            client.println("<a href='https://es.wikipedia.org/wiki/Compuestos_org%C3%A1nicos_vol%C3%A1tiles' target='_blank'>¿Qué significa TVOC?</a>")
             client.println("</body></html>");
             // The HTTP response ends with another blank line
             client.println();
