@@ -84,9 +84,17 @@ Vamos a exponer primero de forma sencilla cómo se conecta el sensor de CO<sub>2
 
 ![Conexión del sensor CSS811 al Arduino](img/arduino-css811-conexiones.jpg) Conexión del sensor CSS811 a un Arduino UNO
 
-Luego simplemente hemos de conectar un cable USB y podremos programar el Arduino con el código necesario para poder leer los datos del sensor. 
+Luego simplemente hemos de conectar un cable USB y podremos programar el Arduino con el código necesario para poder leer los datos del sensor.
+
+Puedes utilizar el código de la carpeta dev/plotter para monitorizar los valores del CO<sub>2</sub> y la TVOC gráficamente. Puedes acceder al mismo en el siguiente enlace: https://github.com/miguelangelcasanova/codos/blob/master/dev/arduino/plotter/plotter.ino 
+
+El código está completamente comentado por lo que si lo deseas no debería resultarte muy dificil poder adaptarlo a tus necesidades.
 
 En esta versión del dispositivo los datos sólo pueden monitorizarse a través de un ordenador conectado mediante dicho cable USB, por eso en la versión definitiva utilizaremos un ESP8266 o un ESP32 que funcionan de forma similar pero permiten además enviar los datos vía WiFi y en el caso del ESP32 también vía Bluetooth.
+
+Descarga el archivo, envía el firmware al Arduino y abre el monitor serie o mejor el plotter serie y podrás visualizar los valores del sensor:
+
+![Serial Plotter del IDE de Arduino con los valores medidos del sensor](img/serial-plotter.png)
 
 ### Version ESP32
 
