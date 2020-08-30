@@ -13,8 +13,6 @@ const char* htmlfile = "/index.html";
 //WiFi Connection configuration
 //const char *ssid = "NOMBRE_DE_TU_RED_WIFI";
 //const char *password = "CLAVE_DE_TU_RED_WIFI";
-const char* ssid     = "MOVISTAR_4B56";
-const char* password = "C7H3bxsmLdfn6GaJzZcN";
 
 ESP8266WebServer server(80);
 

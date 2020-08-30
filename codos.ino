@@ -147,7 +147,7 @@ void loop(){
             client.println("<meta http-equiv=\"refresh\" content=\"1\">");
             client.println("</head>");
             // Web Page Body
-            client.println("<body><h1>CODOS</h1>");
+            client.println("<body><h1>&#128170;CODOS&#128170;</h1>");
             client.println("<p>Sistema de medida de la calidad del aire y otros par&#225;metros ambientales del aula</p>");
             client.println("<table><tr><th>Medida</th><th>Valor</th></tr>");
             if (BME280_sensor_present){
