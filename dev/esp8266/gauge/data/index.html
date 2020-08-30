@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
 	<script src="\jquery.min.js"></script>
 	<script src="\d3-gauge.js"></script>
 	<link rel="stylesheet" href="\style.css">
 </head>
 <body>
+	<h1>&#128170;CODOS&#128170;</h1>
 <script>
 	setInterval(function() {
 	  // Gets CO2 and TVOC values at every two seconds
@@ -59,7 +61,8 @@
 	  , needleContainerRadiusRatio :  0.7
 
 	  , zones: [
-	      { clazz: 'yellow-zone', from: 0.73, to: 0.9 }
+	  	  { clazz: 'green-zone', from: 0.0, to: 0.5 }
+	    , { clazz: 'yellow-zone', from: 0.5, to: 0.9 }
 	    , { clazz: 'red-zone', from: 0.9, to: 1.0 }
 	    ]
 	};
@@ -73,8 +76,8 @@
 	  gauges.push(g);
 	}
 
-	createGauge({ clazz: 'simple', label:  'CO2' });
-	createGauge({ clazz: 'simple', label:  'VOC' });
+	createGauge({ clazz: 'simple', label:  'eCO2' });
+	createGauge({ clazz: 'simple', label:  'TVOC' });
 </script>
 
 </body>

@@ -1,7 +1,7 @@
 /*
 Versión gráfica con gauges para mostrar los valores de los sensores usando ESP8266 SPIFFS HTML Web Page with JPEG, PNG Image 
 a partir de un ejemplo de https://circuits4you.com
- */
+*/
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
@@ -11,17 +11,16 @@ a partir de un ejemplo de https://circuits4you.com
 const char* htmlfile = "/index.html";
 
 //WiFi Connection configuration
-const char *ssid = "NOMBRE_DE_TU_RED_WIFI";
-const char *password = "CLAVE_DE_TU_RED_WIFI";
-
+//const char *ssid = "NOMBRE_DE_TU_RED_WIFI";
+//const char *password = "CLAVE_DE_TU_RED_WIFI";
 
 ESP8266WebServer server(80);
 
 void handleeCO2(){
   long int eCO2_value = 400;
-  String eCO2 = String(eCO2);
+  String eCO2 = String(eCO2_value);
   Serial.println(eCO2);
-  server.send(200, "text/plane",CO2);
+  server.send(200, "text/plane",eCO2);
 }
 
 void handleTVOC(){
