@@ -36,33 +36,41 @@ Este enlace https://schools.forhealth.org/ventilation-guide/ nos dice también c
 💪CODOS💪 es un pequeño circuito electrónico construido sobre un microcontrolador ESP32, un microcontrolador similar a un Arduino pero que ofrece conectividad WiFi y Bluetooth. Esto lo convierte en un dispositivo de Internet de las Cosas, (IoT) lo que nos permite monitorizar los datos de los sensores conectados al mismo a través de Internet. El dispositivo está pensado para medir la cantidad de CO<sub>2</sub> y otros parámetros ambientales para recomendarnos cuando deberíamos renovar el aire de un aula cuando no se disponga de un sistema de ventilación forzada, o bien no sea posible mantener las ventanas abiertas todo el tiempo.
 
 ![CODOS es un guiño a hincar los codos en el aula...](img/school_1810350a1-1.jpg)
+
 CODOS es un guiño a hincar los "CO2" en el aula... ;)
 
 * Con un simple Arduino, un sensor de CO<sub>2</sub> y unos led podemos construir un sistema simplificado que permita indicar cuando los niveles de CO<sub>2</sub> están dentro de unos determinado umbrales, esa fue mi primera idea y publicaré también esta versión; pero cambiando el Arduino por un ESP8266 o un ESP32 podemos además enviar los datos a un servidor y monitorizar por ejemplo los datos de distintas aulas de forma centralizada, almacenar datos estadísticos en una base de datos o realizar otras muchas tareas que podrían sernos útiles sin incrementar prácticamente el coste del dispositivo.
 
 ### BOM (Bill of materials) / Lista de materiales
 En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
-- Un ESP32 por ejemplo el ESP32-DOIT-DEVKIT
+- Un ESP32 por ejemplo el ESP32-DOIT-DEVKIT (también puedes utilizar un ESP8266)
+
 ![ESP32-DEVKITC](img/esp32-devkitc.jpg) 
 - Un sensor de CO<sub>2</sub> CC811 (he probado también con otros sensores como el Sensirion SDC30 pero su coste es mucho más elevado)
+
 ![Sensor CO2 CC811](img/CCS811.jpg) ![Sensor CO2 CC811](img/CCS811.png)
 
 - Opcionalmente un sensor de humedad, presión y temperatura BME280
+
 ![Sensor BME280](img/bme280.jpg)
 
 - Opcionalmente leds de varios colores por ejemplo rojo, naranja y verde para construir un "semáforo" que indique los niveles de CO<sub>2</sub>
+
 ![Diodos led](img/leds.jpg)
 
 - Opcionalmente una pantalla OLED SSD1306 u otra (o un ESP32 que la incluya)
+
 ![OLED SSD1306](img/OLED-SSD1306.jpg) 
 
 - Necesitarás además cables dupont para conectar entre sí los distintos elementos.
+
 ![Cables Dupont](img/cables-dupont.jpg)
 
 - Para alimentar el dispositivo podrás utilizar el puerto USB de un ordenador o mejor un cargador de móvil con conexión microUSB para los ESP o el que corresponga para el Arduino
+
 ![Cargador de móvil](img/cargador.jpg)
 
-## Cómo se monta
+## Montaje
 
 ### Versión Arduino
 
@@ -74,7 +82,7 @@ Vamos a exponer primero de forma sencilla cómo se conecta el sensor de CO<sub>2
 - SCL se conecta al pin A5 del Arduino
 - AWake se conecta al otro pin GND del Arduino.
 
-![Conexión del sensor CSS811 al Arduino](img/arduino-css811-conexiones.jpg)
+![Conexión del sensor CSS811 al Arduino](img/arduino-css811-conexiones.jpg) Conexión del sensor CSS811 a un Arduino UNO
 
 Luego simplemente hemos de conectar un cable USB y podremos programar el Arduino con el código necesario para poder leer los datos del sensor. 
 
@@ -82,8 +90,10 @@ En esta versión del dispositivo los datos sólo pueden monitorizarse a través 
 
 ### Version ESP32
 
-La conexión de los sensores es muy sencilla, tanto el sensor de CO<sub>2</sub> como el sensor ambiental utilizados utilizan conexiones i2c, es decir basta con alimentarlos a 3.3V y masa y conectar a los GPIO22 y GPIO21 que en el ESP32 corresponden a las conexiones SCL y SDA del mencionado protocolo respectivamente. Si deseas conectar la pantalla OLED se conecta también en estos mismos pines.
+La conexión de los sensores es muy similar a la que hemos descrito para el arduino y es también muy sencilla, tanto el sensor de CO<sub>2</sub> como el sensor ambiental utilizados utilizan conexiones i2c, es decir basta con alimentarlos a 3.3V y masa y conectar a los GPIO22 y GPIO21 que en el ESP32 corresponden a las conexiones SCL y SDA del mencionado protocolo respectivamente. Si deseas conectar la pantalla OLED se conecta también en estos mismos pines.
 Dado que podemos utilizar dos pines para conectar varios sensores o la pantalla necesitaremos utilizar una placa de prototipos o diseñar una placa de circuito impreso para conectarlos todos en el mismo punto.
+
+![Conexión del sensor CSS811 con una placa protoboard](img/protoboard.jpg) Conexión del sensor CSS811 a un ESP con una placa protoboard
 
 Para la conexión de los diodos led al tratarse de salidas de 3.3V deberíamos utilizar resistencias limitadoras de corriente y conectarlos a través de estas a cualquiera de los GPIO, yo he escogido los GPIO9, 10 y 11. Al conectar los diodos led hemos de tener en cuenta su polaridad.
 
