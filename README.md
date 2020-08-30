@@ -132,7 +132,7 @@ He diseñado una caja imprimible en 3D para poder albergar el dispositivo aunque
 ### Usando el dispositivo
 El dispositivo se conecta automáticamente a la red del aula para permitir que los datos de los sensores pueden visualizarse en una página web que genera el dispositivo desde cualquier otro dispositivo conectado a la misma red. Para ello debes averiguar la dirección IP del dispositivo y abrir en tu navegador una URL del tipo siguiente: http://192.168.1.105 dónde los números indican la dirección IP local del dispositivo en la red local. 
 
-![CODOS](img/codos.png)
+![CODOS](img/Codos.png)
 
 *Pantalla de datos de las primeras versiones de CODOS*
 
