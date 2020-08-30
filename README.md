@@ -37,7 +37,7 @@ Este enlace https://schools.forhealth.org/ventilation-guide/ nos dice también c
 
 ![CODOS es un guiño a hincar los codos en el aula...](img/school_1810350a1-1.jpg)
 
-CODOS es un guiño a hincar los "CO2" en el aula... ;)
+*CODOS (aka CO<sub>2</sub>) es un guiño a hincar los "CO<sub>2</sub>" en el aula... ;)*
 
 * Con un simple Arduino, un sensor de CO<sub>2</sub> y unos led podemos construir un sistema simplificado que permita indicar cuando los niveles de CO<sub>2</sub> están dentro de unos determinado umbrales, esa fue mi primera idea y publicaré también esta versión; pero cambiando el Arduino por un ESP8266 o un ESP32 podemos además enviar los datos a un servidor y monitorizar por ejemplo los datos de distintas aulas de forma centralizada, almacenar datos estadísticos en una base de datos o realizar otras muchas tareas que podrían sernos útiles sin incrementar prácticamente el coste del dispositivo.
 
@@ -76,15 +76,15 @@ En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 
 Vamos a exponer primero de forma sencilla cómo se conecta el sensor de CO<sub>2</sub> CSS811 a un Arduino Nano o UNO, esta versión es la más económica y sencilla del dispositivo. Simplemente hemos de utilizar 5 cables Dupont hembra-hembra o macho-hembra respectivamente y unir los siguientes pines del sensor a otros tantos pines del Arduino:
 
-- Vcc con un cable rojo lo uniremos al pin de 3.3V del Arduino
-- GND con un cable negro lo uniremos a uno de los pines GND del Arduino
-- SDA se conecta al pin A4 del Arduino
-- SCL se conecta al pin A5 del Arduino
-- AWake se conecta al otro pin GND del Arduino.
+- **Vcc** con un cable rojo lo uniremos al pin de 3.3V del Arduino
+- **GND** con un cable negro lo uniremos a uno de los pines GND del Arduino
+- **SDA** se conecta al pin A4 del Arduino
+- **SCL** se conecta al pin A5 del Arduino
+- **Wake** o **AWake** se conecta al otro pin GND del Arduino.
 
 ![Conexión del sensor CSS811 al Arduino](img/arduino-css811-conexiones.jpg) 
 
-Conexión del sensor CSS811 a un Arduino UNO
+*Conexión del sensor CSS811 a un Arduino UNO*
 
 Luego simplemente hemos de conectar un cable USB y podremos programar el Arduino con el código necesario para poder leer los datos del sensor.
 
@@ -98,19 +98,25 @@ Descarga el archivo, envía el firmware al Arduino y abre el monitor serie o mej
 
 ![Monitor serie del IDE de Arduino con los valores medidos del sensor](img/monitor-serie.png)
 
-Monitor serie del IDE de Arduino
+*Monitor serie del IDE de Arduino*
 
 ![Serial Plotter del IDE de Arduino con los valores medidos del sensor](img/serial-plotter.png)
 
-Serial Plotter del IDE de Arduino
+*Serial Plotter del IDE de Arduino*
 
 ### Version ESP8266 / ESP32
 
 La conexión de los sensores es muy similar a la que hemos descrito para el arduino y es también muy sencilla, tanto el sensor de CO<sub>2</sub> como el sensor ambiental utilizados utilizan conexiones i2c, es decir basta con alimentarlos a 3.3V y masa. Luego hay que conectar a los GPIO22 y GPIO21 que en el ESP32 corresponden a las conexiones SCL y SDA del mencionado protocolo respectivamente o a los pines D2 y D1 que corresponden igualmente a SDA y SCL para el ESP8266. Si deseas conectar la pantalla OLED o el sensor ambiental BME280, se conectan también en estos mismos pines en ambos casos.
 
+![Pinout del ESP8266](img/ESP8266-pinout.png)
+*Pinout del ESP8266*
+
+![Pinout del ESP32](img/ESP32-pinout.png)
+*Pinout del ESP32*
+
 Dado que podemos utilizar dos pines para conectar varios sensores o la pantalla necesitaremos utilizar una placa de prototipos o diseñar una placa de circuito impreso para conectarlos todos en el mismo punto.
 
-![Conexión del sensor CSS811 con una placa protoboard](img/protoboard.jpg) Conexión del sensor CSS811 a un ESP con una placa protoboard
+![Conexión del sensor CSS811 con una placa protoboard](img/protoboard.jpg) *Conexión del sensor CSS811 a un ESP con una placa protoboard*
 
 Para la conexión de los diodos led al tratarse de salidas de 3.3V deberíamos utilizar resistencias limitadoras de corriente y conectarlos a través de estas a cualquiera de los GPIO, yo he escogido los GPIO9, 10 y 11. Al conectar los diodos led hemos de tener en cuenta su polaridad.
 
@@ -125,6 +131,7 @@ He diseñado una caja imprimible en 3D para poder albergar el dispositivo aunque
 El dispositivo se conecta automáticamente a la red del aula para permitir que los datos de los sensores pueden visualizarse en una página web que genera el dispositivo desde cualquier otro dispositivo conectado a la misma red. Para ello debes averiguar la dirección IP del dispositivo y abrir en tu navegador una URL del tipo siguiente: http://192.168.1.105 dónde los números indican la dirección IP local del dispositivo en la red local. 
 
 ![CODOS](img/Codos.png)
+*Pantalla de datos de las primeras versiones de CODOS*
 
 ### Preguntas frecuentes
 
@@ -161,10 +168,10 @@ En Aliexpress últimamente están entregando en 10 días (Hoy es 29/08/2020)
 
 https://es.aliexpress.com/item/32903358923.html?spm=a2g0o.productlist.0.0.26bc4071sE7mf2&algo_pvid=159e700e-7ec4-41f6-a8b4-ef1eb37b29d2&algo_expid=159e700e-7ec4-41f6-a8b4-ef1eb37b29d2-0&btsid=0b0a0ad815986989110232476e8172&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_
 
-*(Este documento está en constante redacción)*
-
 #### Otros proyectos parecidos
 
 - *Air quality sensor:* This simple, fancy looking, ESP8266 based sensor measures values of CO2 and TVOC air pollutants. As output there is addressable RGB led strip, and/or optional OLED display which can show real time levels. https://github.com/Luc3as/Air-quality-Sensor/ (En inglés)
 
 - *Air quality meter:* http://www.futurashop.it/breakout-CCS811-air-quality-ft1331m-qualit%C3%A0%20aria?search=ccs811 (En italiano)
+
+*(Este documento está en constante redacción)*
