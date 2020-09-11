@@ -1,4 +1,4 @@
-# 3D printable housings for CODOS air quality sensor based on ESP32/ESP8266 an alikes
+# 3D printable housings for CODOS air quality sensor based on ESP32/ESP8266 and alikes
 Housings with lot of space to hold several sensors and due to an interchangable base adaptable to all kinds of development board form factors. 
 ![Screenshots housings](img/cajas_CODOS.jpg)
 
