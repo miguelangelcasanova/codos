@@ -14,5 +14,9 @@ Housings with lot of space to hold several sensors and due to an interchangable 
 * "Cloud" shaped - check out https://www.thingiverse.com/thing:2997734 - the bases should be compatible (maybe they needs some drops of hot glue due to reduce the 0,5 mm increased clearance in wall-thickness)
 * to come soon: Rectangular with rounded corners
 
+## Versions
+* v0.2 initial release
+* v0.3 added side holes on top tentacle for bether breathing of MH-Z19P sensor
+
 # License
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">CODOS case "bicho"</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">@Andreas_IBZ (Telegram)</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
