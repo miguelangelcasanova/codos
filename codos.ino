@@ -38,7 +38,6 @@ Adafruit_BME280 BME280_sensor;          // Dirección i2c del sensor de humedad,
 //const char* ssid     = "NOMBRE_DE_TU_RED";
 //const char* password = "CLAVE_DE_TU_RED";
 
-
 WiFiServer server(80);                  // Seleccionar el puerto del servidor Web
 
 // Variable to store the HTTP request
