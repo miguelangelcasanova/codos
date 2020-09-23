@@ -9,11 +9,11 @@ Housings with lot of space to hold several sensors and due to an interchangable 
 * ESP32-CAM, 40 x 27 mm
 * TTGO T1 38 pin, 53,8 x 26,9 mm
 * NANO 30 pin, 43,7 x 18 mm
-* Wemos D1 mini - check out https://www.thingiverse.com/thing:2997734 - the base should be compatible (it will need some drops of hot glue to glue the base into the housing)
+* Wemos D1 mini - credits to Luc3as https://github.com/Luc3as/Air-quality-Sensor - check out his design on https://www.thingiverse.com/thing:2997734 - the base should be compatible (it will need some drops of hot glue to glue the base into the housing)
 
 ## Different shapes
 * "Virus" shaped 
-* "Cloud" shaped - check out https://www.thingiverse.com/thing:2997734 - the bases should be compatible (maybe they need some drops of hot glue due to reduce the 0,5 mm increased clearance in wall-thickness)
+* "Cloud" shaped - credits to Luc3as https://github.com/Luc3as/Air-quality-Sensor - check out his design on https://www.thingiverse.com/thing:2997734 - the bases should be compatible (maybe they need some drops of hot glue due to difference in wall-thickness)
 * to come soon: Rectangular with rounded corners
 
 ## Versions
