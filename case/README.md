@@ -9,11 +9,10 @@ Housings with lot of space to hold several sensors and due to an interchangable 
 * ESP32-CAM, 40 x 27 mm
 * TTGO T1 38 pin, 53,8 x 26,9 mm
 * NANO 30 pin, 43,7 x 18 mm
-* Wemos D1 mini - credits to Luc3as https://github.com/Luc3as/Air-quality-Sensor - check out his design on https://www.thingiverse.com/thing:2997734 - the base should be compatible (it will need some drops of hot glue to glue the base into the housing)
-
+* Wemos D1 mini, 34,2 x 25,4 mm - credits to Luc3as https://github.com/Luc3as/Air-quality-Sensor - based his design on https://www.thingiverse.com/thing:2997734
 ## Different shapes
 * "Virus" shaped 
-* "Cloud" shaped - credits to Luc3as https://github.com/Luc3as/Air-quality-Sensor - check out his design on https://www.thingiverse.com/thing:2997734 - the bases should be compatible (maybe they need some drops of hot glue due to difference in wall-thickness)
+* "Cloud" shaped - credits to Luc3as https://github.com/Luc3as/Air-quality-Sensor - based on his design on https://www.thingiverse.com/thing:2997734 
 * to come soon: Rectangular with rounded corners
 
 ## Versions
@@ -21,6 +20,7 @@ Housings with lot of space to hold several sensors and due to an interchangable 
 * v0.3 added side holes on top tentacle for better breathing of MH-Z19P sensor
 * v0.4 added version for 0.96" OLED + two more bases (TTGO T1 + NANO)
 * v0.5 correction base TTGO T1, added premarked holes for LEDs
+* v0.6 correction "bicho", base Wemos D1 mini added, "cloud" added
 
 # License
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">CODOS case "bicho"</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">@Andreas_IBZ (Telegram)</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
