@@ -26,7 +26,8 @@ int color_G;
 /* Configuración sensor CCS811 */
 Adafruit_CCS811 ccs;
 long lastMsg = 0;
-
+int CO2 = 400;
+int TVOC = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -135,20 +136,22 @@ void loop() {
 
     if(ccs.available()){
       if(!ccs.readData()){
-        Serial.println("CO2: ");
-        Serial.print(ccs.geteCO2());
+        CO2 = ccs.geteCO2();
+        TVOC = ccs.getTVOC();
+        Serial.print("CO2: ");
+        Serial.print(CO2);
         Serial.print("ppm, TVOC: ");
-        Serial.println(ccs.getTVOC());
+        Serial.println(TVOC);
         /* Publicación de co2 y tvoc en cada topic */
-        snprintf (msg, sizeof(msg), "%d", ccs.geteCO2());
+        snprintf (msg, sizeof(msg), "%d", CO2);
         clientMqtt.publish(mqtt_pub_topic_co2, msg);
-        snprintf (msg, sizeof(msg), "%d", ccs.getTVOC());
+        snprintf (msg, sizeof(msg), "%d", TVOC); 
         clientMqtt.publish(mqtt_pub_topic_tvoc, msg);
 
         /* Asignación de color al NeoPixel */
-        color_R = (ccs.geteCO2()-CO2_MIN) / ((CO2_MAX-CO2_MIN)/255);
+        color_R = (CO2-CO2_MIN) / ((CO2_MAX-CO2_MIN)/255);
         if(color_R>255){color_R=255;}
-        color_G = 255 - ((ccs.geteCO2()-CO2_MIN) / ((CO2_MAX/2-CO2_MIN)/255)) + 1;
+        color_G = 256 - color_R;
         if(color_G>255){color_G=255;}
         pixels_STRIP_1.fill(pixels_STRIP_1.Color(color_R, color_G, 0),0, pixels_STRIP_1.numPixels()); 
         pixels_STRIP_1.show();
@@ -156,6 +159,11 @@ void loop() {
       else{
         Serial.println("ERROR!");
         while(1);
+      }
+      // Resetea si la medición se descontrola
+      if(CO2 > 3000){
+        Serial.println("Reset");
+        ESP.reset();
       }
     }
   }

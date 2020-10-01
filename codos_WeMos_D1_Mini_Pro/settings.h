@@ -1,10 +1,10 @@
 // WiFi configuración
-const char* ssid = "???????";
+const char* ssid = "??????";
 const char* password = "???????";
 
 // MQTT configuración
 const char* mqtt_server = "192.168.1.???";
-const int mqtt_port = 1883;
+const int mqtt_port = 1883
 const char* mqtt_id = "airqualitysensor";
 const char* mqtt_sub_topic_healthcheck = "/home/airqualitysensor";
 const char* mqtt_pub_topic_co2 = "/home/airqualitysensor/co2";
