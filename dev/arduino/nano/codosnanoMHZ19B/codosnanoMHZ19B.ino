@@ -130,6 +130,8 @@ void setup() {
   Serial.begin(9600);
   bool status;
 
+  speaker();
+  
   Serial.println("Sensor MHZ19B y OLED 0.96");
 
   Wire.begin(); //Inialize I2C Hardware
@@ -245,6 +247,7 @@ void loop() {
       } else if (currentState != lastState) {
         cycles = 0;
         showImage = true;
+        speaker();
         lastState = currentState;
         switch (currentState) {
           case GREEN : 
@@ -297,6 +300,17 @@ void loop() {
     
   delay(1000);
 }
+
+const int pinBuzzer = 9;
+
+void speaker() {
+  tone(pinBuzzer, 494);
+  delay(100);
+  tone(pinBuzzer, 392);
+  delay(300);  
+  noTone(pinBuzzer);  
+}
+
 
 void drawPercentbar(int x,int y, int width,int height, int progress, bool customLeyend, char *strCustomLeyend)
 {
