@@ -358,7 +358,9 @@ void drawPercentbar(int x,int y, int width,int height, int progress, bool custom
 void traffic_lights(int CO2_value){
       
   Serial.println(CO2_value);
-  if (CO2_value <= CO2_safe_level){
+  // Condicion con histeresis en bajada de estado
+  if (((currentState != GREEN) && (CO2_value <= (CO2_safe_level-10))) ||
+     ((currentState == GREEN) && (CO2_value <= CO2_safe_level))){
     // Encender el led verde y apagar el resto
     Serial.println("Parece que el aula no necesita más ventilación de momento");
     digitalWrite(verde, HIGH);
@@ -371,7 +373,9 @@ void traffic_lights(int CO2_value){
       display.display();
     }
   } 
-  if ((CO2_value > CO2_safe_level) & (CO2_value < CO2_alarm_level)) {
+  // Condicion con histeresis en bajada de estado
+  if (((currentState != RED) && ((CO2_value > CO2_safe_level) & (CO2_value < CO2_alarm_level))) ||
+     ((currentState == RED) && ((CO2_value > CO2_safe_level) & (CO2_value < (CO2_alarm_level-10))))) {
     // Encender el led amarillo y apagar el resto
     Serial.println("El aire del aula necesitará renovarse pronto");
     digitalWrite(verde, LOW);
