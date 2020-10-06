@@ -5,6 +5,7 @@ y otras variables ambientales para monitorizar la calidad del aire en el aula
 (o en otros lugares de trabajo)
 *********************************************************************************/
 
+char VERSION_SW[6] = "v1.02";
 #include "Wire.h"                       // Librería Wire para el soporte del protocolo i2c
 
 #include "MHZ19.h"                                        
@@ -147,6 +148,10 @@ void setup() {
 
       // Draw a single pixel in white
       display.drawPixel(10, 10, SSD1306_WHITE);
+      display.setCursor(0,0);
+      display.setTextSize(2);
+      display.setTextColor(WHITE);
+      display.println(VERSION_SW);
 
       // Show the display buffer on the screen. You MUST call display() after
       // drawing commands to make them visible on screen!
