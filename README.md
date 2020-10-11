@@ -5,7 +5,7 @@
 *(Este documento está en constante redacción)*
 
 *"Algunos científicos comentan que mejorar la ventilación y la calidad del aire es un método que las escuelas pueden usar para reducir el riesgo de transmisión del coronavirus.
-Sin embargo, en una encuesta entre distritos escolares grandes del Norte de Texas, The Dallas Morning News encontró que las escuelas están lejos de alcanzar los parámetros de calidad del aire propuestos en junio por expertos en construcción.  
+Sin embargo, en una encuesta entre distritos escolares grandes del Norte de Texas, The Dallas Morning News encontró que las escuelas están lejos de alcanzar los parámetros de calidad del aire propuestos en junio por expertos en construcción.
 Investigadores de la Universidad de Harvard recomendaron instalar filtros de aire de alta graduación, limpiadores de aire portátiles y fuentes de luz ultravioleta dentro de los conductos de aire para eliminar al virus.
 Al revisar el nivel de dióxido de carbono en las aulas se puede comprobar si está entrando suficiente aire fresco..."*
 
@@ -49,10 +49,10 @@ CODOS está pensado para medir la cantidad de CO<sub>2</sub> y otros parámetros
 En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 - Un ESP32 por ejemplo el ESP32-DOIT-DEVKIT (también puedes utilizar un ESP8266)
 
-![ESP32-DEVKITC](img/esp32-devkitc.jpg) 
-- Un sensor de CO<sub>2</sub> CC811 (he probado también con otros sensores como el Sensirion SDC30 pero su coste es mucho más elevado)
+![ESP32-DEVKITC](img/esp32-devkitc.jpg)
+- Un sensor de CO<sub>2</sub> CCS811 (he probado también con otros sensores como el Sensirion SDC30 pero su coste es mucho más elevado)
 
-![Sensor CO2 CC811](img/CCS811.jpg) ![Sensor CO2 CC811](img/sensor-CCS811.png)
+![Sensor CO2 CCS811](img/CCS811.jpg) ![Sensor CO2 CCS811](img/sensor-CCS811.png)
 
 - Opcionalmente un sensor de humedad, presión y temperatura BME280
 
@@ -64,7 +64,7 @@ En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 
 - Opcionalmente una pantalla OLED SSD1306 u otra (o un ESP32 que la incluya)
 
-![OLED SSD1306](img/OLED-SSD1306.jpg) 
+![OLED SSD1306](img/OLED-SSD1306.jpg)
 
 - Necesitarás además cables dupont para conectar entre sí los distintos elementos.
 
@@ -78,7 +78,7 @@ En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 
 ### Versión Arduino
 
-Vamos a exponer primero de forma sencilla cómo se conecta el sensor de CO<sub>2</sub> CSS811 a un Arduino Nano o UNO, esta versión es la más económica y sencilla del dispositivo. Simplemente hemos de utilizar 5 cables Dupont hembra-hembra o macho-hembra respectivamente y unir los siguientes pines del sensor a otros tantos pines del Arduino:
+Vamos a exponer primero de forma sencilla cómo se conecta el sensor de CO<sub>2</sub> CCS811 a un Arduino Nano o UNO, esta versión es la más económica y sencilla del dispositivo. Simplemente hemos de utilizar 5 cables Dupont hembra-hembra o macho-hembra respectivamente y unir los siguientes pines del sensor a otros tantos pines del Arduino:
 
 - **Vcc** con un cable rojo lo uniremos al pin de 3.3V del Arduino
 - **GND** con un cable negro lo uniremos a uno de los pines GND del Arduino
@@ -86,13 +86,13 @@ Vamos a exponer primero de forma sencilla cómo se conecta el sensor de CO<sub>2
 - **SCL** se conecta al pin A5 del Arduino
 - **Wake** o **AWake** se conecta al otro pin GND del Arduino, aunque también podría controlarse con pin de salida.
 
-![Conexión del sensor CSS811 al Arduino](img/arduino-css811-conexiones.jpg) 
+![Conexión del sensor CCS811 al Arduino](img/arduino-ccs811-conexiones.jpg)
 
-*Conexión del sensor CSS811 a un Arduino UNO*
+*Conexión del sensor CCS811 a un Arduino UNO*
 
 Luego simplemente hemos de conectar un cable USB y podremos programar el Arduino con el código necesario para poder leer los datos del sensor.
 
-Puedes utilizar el código de la carpeta dev/plotter para monitorizar los valores del CO<sub>2</sub> y la TVOC gráficamente. Puedes acceder al mismo en el siguiente enlace: https://github.com/miguelangelcasanova/codos/blob/master/dev/arduino/plotter/plotter.ino 
+Puedes utilizar el código de la carpeta dev/plotter para monitorizar los valores del CO<sub>2</sub> y la TVOC gráficamente. Puedes acceder al mismo en el siguiente enlace: https://github.com/miguelangelcasanova/codos/blob/master/dev/arduino/plotter/plotter.ino
 
 El código está completamente comentado por lo que si lo deseas no debería resultarte muy dificil poder adaptarlo a tus necesidades.
 
@@ -110,7 +110,7 @@ Descarga el archivo, envía el firmware al Arduino y abre el monitor serie o mej
 
 ### Version ESP8266 / ESP32
 
-La conexión de los sensores es muy similar a la que hemos descrito para el arduino y es también muy sencilla, tanto el sensor de CO<sub>2</sub> como el sensor ambiental utilizados utilizan conexiones i2c, es decir basta con alimentarlos a 3.3V y masa. Luego hay que conectar a los **GPIO22** y **GPIO21** que en el ESP32 corresponden a las conexiones SCL y SDA del mencionado protocolo respectivamente o a los pines **D2** y **D1** que corresponden igualmente a SDA y SCL para el ESP8266. 
+La conexión de los sensores es muy similar a la que hemos descrito para el arduino y es también muy sencilla, tanto el sensor de CO<sub>2</sub> como el sensor ambiental utilizados utilizan conexiones i2c, es decir basta con alimentarlos a 3.3V y masa. Luego hay que conectar a los **GPIO22** y **GPIO21** que en el ESP32 corresponden a las conexiones SCL y SDA del mencionado protocolo respectivamente o a los pines **D2** y **D1** que corresponden igualmente a SDA y SCL para el ESP8266.
 
 Si deseas conectar la pantalla OLED o el sensor ambiental BME280, se conectan también en estos mismos pines en ambos casos.
 
@@ -122,19 +122,19 @@ Si deseas conectar la pantalla OLED o el sensor ambiental BME280, se conectan ta
 
 Dado que podemos utilizar dos pines para conectar varios sensores o la pantalla necesitaremos utilizar una placa de prototipos o diseñar una placa de circuito impreso para conectarlos todos en el mismo punto.
 
-![Conexión del sensor CSS811 con una placa protoboard](img/protoboard.jpg) *Conexión del sensor CSS811 a un ESP con una placa protoboard*
+![Conexión del sensor CCS811 con una placa protoboard](img/protoboard.jpg) *Conexión del sensor CCS811 a un ESP con una placa protoboard*
 
 Para la conexión de los diodos led al tratarse de salidas de 3.3V deberíamos utilizar resistencias limitadoras de corriente y conectarlos a través de estas a cualquiera de los GPIO, yo he escogido los GPIO9, 10 y 11. Al conectar los diodos led hemos de tener en cuenta su polaridad.
 
 ### El programa
-También he diseñado varias versiones del programa según la plataforma utilizada. 
+También he diseñado varias versiones del programa según la plataforma utilizada.
 El programa debe cargarse desde el entorno IDE de Arduino o desde VS Studio Code en la placa correspondiente.
 
-### El dispositivo 
+### El dispositivo
 He diseñado una caja imprimible en 3D para poder albergar el dispositivo aunque este puede montarse directamente sobre una placa de prototipos si no se tiene la habilidad para soldar unos cuantos componentes aunque su montaje debería resultar especialmente sencillo.
 
 ### Usando el dispositivo
-El dispositivo se conecta automáticamente a la red del aula para permitir que los datos de los sensores pueden visualizarse en una página web que genera el dispositivo desde cualquier otro dispositivo conectado a la misma red. Para ello debes averiguar la dirección IP del dispositivo y abrir en tu navegador una URL del tipo siguiente: http://192.168.1.105 dónde los números indican la dirección IP local del dispositivo en la red local. 
+El dispositivo se conecta automáticamente a la red del aula para permitir que los datos de los sensores pueden visualizarse en una página web que genera el dispositivo desde cualquier otro dispositivo conectado a la misma red. Para ello debes averiguar la dirección IP del dispositivo y abrir en tu navegador una URL del tipo siguiente: http://192.168.1.105 dónde los números indican la dirección IP local del dispositivo en la red local.
 
 ![CODOS](img/Codos.png)
 
@@ -143,15 +143,15 @@ El dispositivo se conecta automáticamente a la red del aula para permitir que l
 ### Preguntas frecuentes
 
 #### ¿Cuál es el objetivo del proyecto?
-Dotar a las aulas y otros espacios de trabajo de una forma sencilla y económica 
-de medir la calidad del aire, en concreto de la concentración de CO<sub>2</sub> 
+Dotar a las aulas y otros espacios de trabajo de una forma sencilla y económica
+de medir la calidad del aire, en concreto de la concentración de CO<sub>2</sub>
 
 #### ¿Dónde comprar los componentes?
 
 El ESP32 y los leds se pueden comprar en muchas tiendas físicas de electrónica en España o a través de Internet. En China por supuesto resultan mucho más económico; pero tardarás en tenerlo varias semanas en tener los componentes en tus manos.
 Los sensores son un poco más difíciles de localizar en tiendas físicas pero puedes adquirirlos igualmente en China o un poco más caros encontrarlos a través de ebay o Amazon.
 
-El ESP32 lo puedes comprar en España por unos 10€ por ejemplo en: 
+El ESP32 lo puedes comprar en España por unos 10€ por ejemplo en:
 
 https://www.ebay.es/itm/EL0116-ESP-WROOM-32-ESPRESSIF-Placa-Desarrollo-Arduino-WiFi-Bluetooth-Dual-Core/233565682462
 
