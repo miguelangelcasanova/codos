@@ -140,6 +140,10 @@ El dispositivo se conecta automáticamente a la red del aula para permitir que l
 
 *Pantalla de datos de las primeras versiones de CODOS*
 
+### Información para el calibrado de los sensores
+Documentación para estudiar el comportamiento de los sensores en aire bajo condiciones controladas mediante materiales caseros.
+[PROCEDIMIENTO](/doc/C%C3%A1lculos%20de%20concentraci%C3%B3n%20de%20CO2.pdf)
+
 ### Preguntas frecuentes
 
 #### ¿Cuál es el objetivo del proyecto?
