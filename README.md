@@ -2,7 +2,7 @@
 
 ## Un sistema de bajo coste basado en ESP8266/ESP32 para la detección del CO<sub>2</sub> y otras variables ambientales para monitorizar la calidad del aire en el aula (o en otros lugares de trabajo)
 
-*(Este documento está en constante redacción)*
+*(Se trata de un proyecto en constante actualización y este documento está en constante redacción)*
 
 *"Algunos científicos comentan que mejorar la ventilación y la calidad del aire es un método que las escuelas pueden usar para reducir el riesgo de transmisión del coronavirus.
 Sin embargo, en una encuesta entre distritos escolares grandes del Norte de Texas, The Dallas Morning News encontró que las escuelas están lejos de alcanzar los parámetros de calidad del aire propuestos en junio por expertos en construcción.
@@ -126,9 +126,13 @@ Dado que podemos utilizar dos pines para conectar varios sensores o la pantalla 
 
 Para la conexión de los diodos led al tratarse de salidas de 3.3V deberíamos utilizar resistencias limitadoras de corriente y conectarlos a través de estas a cualquiera de los GPIO, yo he escogido los GPIO9, 10 y 11. Al conectar los diodos led hemos de tener en cuenta su polaridad.
 
+### Otras versiones
+Gracias a otros miembros de la comunidad el proyecto ha ido creciendo y enriqueciéndose con las contribuciones de makers, makerspaces y fablabs.
+En la carpeta esp32 hay a tu disposición una versión avanzada que incluye el uso de bases de datos como InfluxDB para almacenar y visualizar en el futuro los datos de muchos sensores.
+
 ### El programa
 También he diseñado varias versiones del programa según la plataforma utilizada.
-El programa debe cargarse desde el entorno IDE de Arduino o desde VS Studio Code en la placa correspondiente.
+El programa debe cargarse desde el entorno IDE de Arduino o desde VS Studio Code (Platformio) en la placa correspondiente.
 
 ### El dispositivo
 He diseñado una caja imprimible en 3D para poder albergar el dispositivo aunque este puede montarse directamente sobre una placa de prototipos si no se tiene la habilidad para soldar unos cuantos componentes aunque su montaje debería resultar especialmente sencillo.
