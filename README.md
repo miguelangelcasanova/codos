@@ -148,6 +148,10 @@ El dispositivo se conecta automáticamente a la red del aula para permitir que l
 Documentación para estudiar el comportamiento de los sensores en aire bajo condiciones controladas mediante materiales caseros.
 [PROCEDIMIENTO](/doc/C%C3%A1lculos%20de%20concentraci%C3%B3n%20de%20CO2.pdf)
 
+### To do
+En un proyecto como este hay muchas cosas que siempre quedan por hacer. Por ejemplo, la calibración de los sensores es fundamental y no está bien probada, también es necesario hacer pruebas de campo montando sensores en las aulas y tomando medidas para comprobar su fiabilidad.
+Si quieres colaborar no tienes más que ponerte en contacto con el grupo de trabajo por Telegram.
+
 ### Preguntas frecuentes
 
 #### ¿Cuál es el objetivo del proyecto?
