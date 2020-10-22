@@ -98,7 +98,11 @@ void callback(char* topic, byte* payload, unsigned int length) {
       pixels_STRIP_1.fill(pixels_STRIP_1.Color(0, 0, 0),0, pixels_STRIP_1.numPixels()); // black  
       pixels_STRIP_1.show(); // This sends the updated pixel color to the hardware.
       Serial.println("LightOff");
+  } else {
+    CO2_MAX = mqttcommand.toInt();
+    Serial.println(CO2_MAX);
   }
+  
 }
 
 void reconnect() {
@@ -149,12 +153,29 @@ void loop() {
         clientMqtt.publish(mqtt_pub_topic_tvoc, msg);
 
         /* Asignación de color al NeoPixel */
-        color_R = (CO2-CO2_MIN) / ((CO2_MAX-CO2_MIN)/255);
-        if(color_R>255){color_R=255;}
-        color_G = 256 - color_R;
-        if(color_G>255){color_G=255;}
-        pixels_STRIP_1.fill(pixels_STRIP_1.Color(color_R, color_G, 0),0, pixels_STRIP_1.numPixels()); 
-        pixels_STRIP_1.show();
+        #if MODO_TERMOMETRO == 0  
+          color_R = (CO2-CO2_MIN) / ((CO2_MAX-CO2_MIN)/255);
+          if(color_R>255){color_R=255;}
+          color_G = 256 - color_R;
+          if(color_G>255){color_G=255;}
+          pixels_STRIP_1.fill(pixels_STRIP_1.Color(color_R, color_G, 0),0, pixels_STRIP_1.numPixels()); 
+          pixels_STRIP_1.show();
+        #else
+          for(int i=0;i<NUMPIXELS_STRIP_1;i++){
+          pixels_STRIP_1.setPixelColor(i, pixels_STRIP_1.Color(255,255,255)); // white color.
+          pixels_STRIP_1.show(); // This sends the updated pixel color to the hardware.
+        }
+        delay(2000);
+        for(int i=1;i<NUMPIXELS_ERROR;i++){
+          pixels_STRIP_1.setPixelColor(i-1, pixels_STRIP_1.Color(255,0,0)); // red color.
+          pixels_STRIP_1.setPixelColor(i, pixels_STRIP_1.Color(0,0,255)); // red color.
+          pixels_STRIP_1.show(); // This sends the updated pixel color to the hardware.
+          delay(500);
+        }
+       
+   36->CO2_MAX-CO2_MIN
+   x->CO2
+        #endif
       }
       else{
         Serial.println("ERROR!");
