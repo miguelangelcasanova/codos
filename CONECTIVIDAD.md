@@ -10,7 +10,7 @@ Mosquitto es un broker MQTT de Eclipse muy utilizado sobre Raspberry Pi. Permite
 <img src="./img/funcionamiento-de-MQTT.jpg" align="center" />
 
 **TOPICS**
-Es importante crear una estructura funcional y sobre todo auto-explicativa. De manera que de la subscripción a cualquier nivel se obtenga información uniforme y coherente. Se propone:
+Es importante crear una estructura funcional y sobre todo auto-explicativa. De manera que, de la subscripción a cualquier nivel, se obtenga información uniforme y coherente. Se propone:
 <img src="./img/codos-mqtt-topics.png" align="center" />
 
 El alias debe ser único por código postal y dispositivo. Si tienes dudas, puedes hacer una subscripción usando el _wildcard_ /codos/07610
