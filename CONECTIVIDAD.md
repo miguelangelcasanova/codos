@@ -17,6 +17,7 @@ El alias debe ser único por código postal y dispositivo. Si tienes dudas, pued
 
 **Servidor**
 Se ruega encarecidamente un uso comedido de este servidor Mosquitto ya que, de momento, cuenta con recursos limitados. Fíjate que el puerto no es el propio de MQTT: 1883. Si no el 48052.
+</br>
 [domohome.ddns.jazztel.es:48052](http://domohome.ddns.jazztel.es:48052)
 
 
