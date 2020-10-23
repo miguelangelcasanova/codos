@@ -16,4 +16,4 @@ const int update_time_sensors = 5000;
 const int PIN_STRIP_1 = 0;
 const int NUMPIXELS_STRIP_1 = 3;
 const int CO2_MIN = 400;
-const int CO2_MAX = 1500;
+long CO2_MAX = 1500;
