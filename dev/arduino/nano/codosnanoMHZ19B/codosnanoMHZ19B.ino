@@ -5,7 +5,7 @@ y otras variables ambientales para monitorizar la calidad del aire en el aula
 (o en otros lugares de trabajo)
 *********************************************************************************/
 
-char VERSION_SW[6] = "v1.03";
+char VERSION_SW[6] = "v1.04";
 #include "Wire.h"                       // Librería Wire para el soporte del protocolo i2c
 
 #include "MHZ19.h"                                        
@@ -120,7 +120,7 @@ unsigned long getDataTimer = 0;
 unsigned long MHZ19B_PREHEATING_TIME = 60000; // Por especificaciones tiene un PREHEATING Time de 3 minutos... pero pongo 1.. 
 
 const int OFFSET_CALIBRATION_TEMP = -6; // Valor obtenido de comparar con un termometro mas fiable que tengo en casa.. NO ES MUY FIABLE
-const int OFFSET_CALIBRATION_PPM = -100; // Esta calibracion esta inventada (PENDIENTE) porque supongo que debiera ser unas tablas en funcion de temp y humedad asi que tomo un valor conservador para intentar no generar falsa alarma en el aula.
+const int OFFSET_CALIBRATION_PPM = 0; // Esta calibracion esta inventada (PENDIENTE) porque supongo que debiera ser unas tablas en funcion de temp y humedad asi que tomo un valor conservador para intentar no generar falsa alarma en el aula.
 int p1 = 0; // Variable donde calculo el porcentaje sobre el limite establecido como ROJO
 char leyend[15] = "12345678901234"; // Variable donde pongo la leyenda que se pinta en la barra de progreso en funcion del estado
 char leyendGREEN[15] = "AULA OK"; 
@@ -202,8 +202,8 @@ void setup() {
 
 int ppm_uart = 0; // Variable donde vuelco el valor CO2 obtenido del MHZ19B
 int temperature = 0; // Variable donde vuelco el valor temperatura obtenido del MHZ19B
-const int CO2_safe_level = 500;        // Se debe especificar un valor máximo de CO2 seguro
-const int CO2_alarm_level = 1100;       // Se debe especificar un valor máximo de CO2 de alarma
+const int CO2_safe_level = 800;        // Se debe especificar un valor máximo de CO2 seguro
+const int CO2_alarm_level = 1200;       // Se debe especificar un valor máximo de CO2 de alarma
 
 // Tipos y variables para controlar el estado del semaforo y las acciones asociadas
 typedef enum {
@@ -214,6 +214,7 @@ typedef enum {
 
 SEMAPHORE_TYPE currentState = GREEN;
 SEMAPHORE_TYPE lastState = RED;
+const int HISTERESIS = 30;
 
 bool showImage = false; // Variable que indicara si hay que mostrar imagen de smiley
 const unsigned long NUM_CYCLES_SHOW_DATA = 10; // muestro datos lecturas durante 10 lecturas ppm
@@ -364,7 +365,7 @@ void traffic_lights(int CO2_value){
       
   Serial.println(CO2_value);
   // Condicion con histeresis en bajada de estado
-  if (((currentState != GREEN) && (CO2_value <= (CO2_safe_level-10))) ||
+  if (((currentState != GREEN) && (CO2_value <= (CO2_safe_level-HISTERESIS))) ||
      ((currentState == GREEN) && (CO2_value <= CO2_safe_level))){
     // Encender el led verde y apagar el resto
     Serial.println("Parece que el aula no necesita más ventilación de momento");
@@ -380,7 +381,7 @@ void traffic_lights(int CO2_value){
   } 
   // Condicion con histeresis en bajada de estado
   if (((currentState != RED) && ((CO2_value > CO2_safe_level) & (CO2_value < CO2_alarm_level))) ||
-     ((currentState == RED) && ((CO2_value > CO2_safe_level) & (CO2_value < (CO2_alarm_level-10))))) {
+     ((currentState == RED) && ((CO2_value > CO2_safe_level) & (CO2_value < (CO2_alarm_level-HISTERESIS))))) {
     // Encender el led amarillo y apagar el resto
     Serial.println("El aire del aula necesitará renovarse pronto");
     digitalWrite(verde, LOW);
