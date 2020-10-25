@@ -5,7 +5,7 @@ y otras variables ambientales para monitorizar la calidad del aire en el aula
 (o en otros lugares de trabajo)
 *********************************************************************************/
 
-char VERSION_SW[6] = "v1.02";
+char VERSION_SW[6] = "v1.03";
 #include "Wire.h"                       // Librería Wire para el soporte del protocolo i2c
 
 #include "MHZ19.h"                                        
@@ -165,7 +165,7 @@ void setup() {
     //mySerial.begin(BAUDRATE, SERIAL_8N1, RX_PIN, TX_PIN); // (ESP32 Example) device to MH-Z19 serial start   
     myMHZ19.begin(mySerial);                                // *Serial(Stream) refence must be passed to library begin(). 
 
-    myMHZ19.autoCalibration();                              // Turn auto calibration ON (OFF autoCalibration(false))    
+    myMHZ19.autoCalibration(false);                              // Turn auto calibration ON (OFF autoCalibration(false))    
  } 
 
  if (OLED_present) {
