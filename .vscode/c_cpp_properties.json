@@ -245,7 +245,7 @@
                 ]
             },
             "defines": [
-                "PLATFORMIO=50001",
+                "PLATFORMIO=50002",
                 "ARDUINO_ESP32_DEV",
                 "CORE_DEBUG_LEVEL=4",
                 "LOG_LOCAL_LEVEL=4",
