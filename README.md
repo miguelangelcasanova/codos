@@ -40,6 +40,7 @@ Esto significa que podemos usar dispositivos de [Internet de las Cosas, (IoT)](h
 CODOS está pensado para medir la cantidad de CO<sub>2</sub> y otros parámetros ambientales para recomendarnos cuando deberíamos renovar el aire de un aula u otro espacio de trabajo, sobre todo cuando no se disponga de un sistema de ventilación forzada, o bien no sea posible mantener las ventanas abiertas todo el tiempo.
 
 ![CODOS es un guiño a hincar los codos en el aula...](img/school_1810350a1-1.jpg)
+
 Pupils at Henrietta Barnett School in Hampstead Garden Suburb raise their arms during a Key Stage Three maths lesson, the school received high scores during their Key Stage Three results, Wednesday 27 February, 2008. Photo: Jane Mingay
 
 *CODOS (aka CO<sub>2</sub>) es un guiño a hincar los "CO<sub>2</sub>" en el aula... ;)*
@@ -61,7 +62,7 @@ En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 
 - Opcionalmente leds de varios colores por ejemplo rojo, naranja y verde para construir un "semáforo" que indique los niveles de CO<sub>2</sub> o directamente utilizar un módulo de semáfot
 
-![Diodos led](img/leds.jpg)![Diodos led](img/semaforo.png)
+![Diodos led](img/leds.jpg) ![Semáforo de diodos LED](img/semaforo.png)
 
 - Opcionalmente una pantalla OLED SSD1306 u otra (o un ESP32 que la incluya)
 
