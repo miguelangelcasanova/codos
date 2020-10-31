@@ -61,7 +61,7 @@ En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 
 - Opcionalmente leds de varios colores por ejemplo rojo, naranja y verde para construir un "semáforo" que indique los niveles de CO<sub>2</sub> o directamente utilizar un módulo de semáfot
 
-![Diodos led](img/leds.jpg)![Diodos led](img/semaforo.png)
+![Diodos led](img/leds.jpg) ![Semáforo de diodos LED](img/semaforo.png)
 
 - Opcionalmente una pantalla OLED SSD1306 u otra (o un ESP32 que la incluya)
 
