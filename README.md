@@ -74,7 +74,7 @@ En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 
 - Para alimentar el dispositivo podrás utilizar el puerto USB de un ordenador o mejor un cargador de móvil con conexión microUSB para los ESP o el que corresponga para el Arduino
 
-![Cargador de móvil](img/cargador.jpg)
+![Cargador de móvil](img/cargador.jpg)![Cable Micro-USB](img/cable_micro_usb.jpg)
 
 ## Montaje
 
