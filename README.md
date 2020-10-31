@@ -40,6 +40,7 @@ Esto significa que podemos usar dispositivos de [Internet de las Cosas, (IoT)](h
 CODOS está pensado para medir la cantidad de CO<sub>2</sub> y otros parámetros ambientales para recomendarnos cuando deberíamos renovar el aire de un aula u otro espacio de trabajo, sobre todo cuando no se disponga de un sistema de ventilación forzada, o bien no sea posible mantener las ventanas abiertas todo el tiempo.
 
 ![CODOS es un guiño a hincar los codos en el aula...](img/school_1810350a1-1.jpg)
+
 Pupils at Henrietta Barnett School in Hampstead Garden Suburb raise their arms during a Key Stage Three maths lesson, the school received high scores during their Key Stage Three results, Wednesday 27 February, 2008. Photo: Jane Mingay
 
 *CODOS (aka CO<sub>2</sub>) es un guiño a hincar los "CO<sub>2</sub>" en el aula... ;)*
