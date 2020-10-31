@@ -59,9 +59,9 @@ En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 
 ![Sensor BME280](img/bme280.jpg)
 
-- Opcionalmente leds de varios colores por ejemplo rojo, naranja y verde para construir un "semáforo" que indique los niveles de CO<sub>2</sub>
+- Opcionalmente leds de varios colores por ejemplo rojo, naranja y verde para construir un "semáforo" que indique los niveles de CO<sub>2</sub> o directamente utilizar un módulo de semáfot
 
-![Diodos led](img/leds.jpg)
+![Diodos led](img/leds.jpg)![Diodos led](img/semaforo.png)
 
 - Opcionalmente una pantalla OLED SSD1306 u otra (o un ESP32 que la incluya)
 
