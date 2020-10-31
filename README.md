@@ -152,7 +152,7 @@ Documentación para estudiar el comportamiento de los sensores en aire bajo cond
 
 ### To do
 En un proyecto como este hay muchas cosas que siempre quedan por hacer. Por ejemplo, la calibración de los sensores es fundamental y no está bien probada, también es necesario hacer pruebas de campo montando sensores en las aulas y tomando medidas para comprobar su fiabilidad.
-Si quieres colaborar no tienes más que ponerte en contacto con el grupo de trabajo por Telegram.
+Si quieres colaborar no tienes más que ponerte en contacto con el grupo de trabajo por Telegram: https://t.me/codos_ventilacion (a 31 de octubre en el grupo hay 150 personas).
 
 ### Preguntas frecuentes
 
