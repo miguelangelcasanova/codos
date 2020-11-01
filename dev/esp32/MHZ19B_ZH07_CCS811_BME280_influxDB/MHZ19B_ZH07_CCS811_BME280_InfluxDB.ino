@@ -337,7 +337,7 @@ void loop()
     // escribir un tag con una descripción del sensor
     sprintf(tags,tagbuf); 
     // escribir los valores
-    sprintf(fields,"CO2[ppm]=%d,T[°C]=%0.1f,accuracy[o/o]=%d,CO2_min[ppm]=%d,PM1.0[µg/m³]=%d,PM2.5[µg/m³]=%d,PM10[µg/m³]=%d,eCO2[ppm]=%d,TVOC[ppb]=%d,T[°C]=%0.2f,p[hPa]=%0.2f,rH[o/o]=%0.2f,baseline=%d",val_CO2,val_tempC,val_accCO2,val_minCO2,val_PM1_0,val_PM2_5,val_PM10,val_eCO2,val_TVOC,BMEtempC,BMEpres,BMEhumid,currBaseline); // escribir valores: CO2, Temperatura, accuracy y CO2_min
+    sprintf(fields,"CO2[ppm]=%d,T_MH[°C]=%0.1f,accuracy[o/o]=%d,CO2_min[ppm]=%d,PM1.0[µg/m³]=%d,PM2.5[µg/m³]=%d,PM10[µg/m³]=%d,eCO2[ppm]=%d,TVOC[ppb]=%d,T_BME[°C]=%0.2f,p[hPa]=%0.2f,rH[o/o]=%0.2f,baseline=%d",val_CO2,val_tempC,val_accCO2,val_minCO2,val_PM1_0,val_PM2_5,val_PM10,val_eCO2,val_TVOC,BMEtempC,BMEpres,BMEhumid,currBaseline); // escribir valores: CO2, Temperatura, accuracy y CO2_min
     bool writeSuccessful = influx.write(INFLUX_MEASUREMENT,tags,fields);
     delay(500);
     if(!writeSuccessful)
