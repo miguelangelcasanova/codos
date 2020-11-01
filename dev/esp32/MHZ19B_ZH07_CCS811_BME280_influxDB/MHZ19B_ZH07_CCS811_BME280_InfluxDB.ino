@@ -74,7 +74,7 @@
 #include <SparkFunBME280.h> // Click here to get the library: http://librarymanager/All#SparkFun_BME280
 #include <SparkFunCCS811.h> // Click here to get the library: http://librarymanager/All#SparkFun_CCS811
 #include <MHZ19.h> // para MH-Z19B
-#include <SoftwareSerial.h> // para MH-Z19B
+#include <SoftwareSerial.h> // Click here to get the library: http://librarymanager/All#EspSoftwareSerial
 #define TXPin 32 // para MH-Z19B
 #define RXPin 33 // para MH-Z19B
 
