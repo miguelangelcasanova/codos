@@ -1,7 +1,7 @@
 // ESP32_MH-Z19B_ZH07_CCS811_BME280_InfluxDB
 // Medir CO2, PM & datos ambientales con ESP32, MH-Z19B, ZH07, CCS811 y BME280
 //
-// @Andreas_IBZ (Telegram), 31/10/2020
+// @Andreas_IBZ (Telegram), 03/11/2020
 // @Roberbike (Telegram), 24/10/2020
 //
 // based on / credits to:
@@ -16,8 +16,7 @@
 // a) To save energy i introduced a "modem sleep" besides actuating nWAKE of CCS811. It looks like 
 // WiFi.disconnect(true); doesn't work the same on every ESP32 out there. There should be some sort of retry etc.
 // if it's impossible to connect after un wake-up. 
-// b) add bool switches to switch off sensors that aren't used
-// c) move code to read ZH07 at the end of this sketch into a library
+// b) move code to read ZH07 at the end of this sketch into a library
 //
 // ################
 //
@@ -52,7 +51,9 @@
 // GND - GND
 // nWAKE - D5 (only CCS811)
 //
-// Cambios
+// Changelog
+// 03/11/2020 - smaller corrections in influx upload string and loop
+// 01/11/2020 - added bool switches to deactivate sensors that aren't used
 // 31/10/2020 - rework of code to fit in ZH07-sensor without interference on existing sensors, update of influx-connection & serial CSV output
 // 25/10/2020 - correciones y cambios, añadido "interruptores" bool para apagar modemsleep y debuginfo
 // 24/10/2020 - añadido sensor MH-Z19B
@@ -68,51 +69,66 @@
 #include <WiFi.h>
 #include <Wire.h>
 #include "time.h"
+#include "WiFi_credentials.h" // credenciales del WiFi
+// influx
 #include "InfluxArduino.hpp" // he modificado la librería para que no hace un Serial.print de la respuesta del servidor InfluxDB - el original es: https://github.com/teebr/Influx-Arduino
 #include "InfluxDB.h" // credenciales y certificado del servidor influx
-#include "WiFi_credentials.h" // credenciales del WiFi
+// BME280
 #include <SparkFunBME280.h> // Click here to get the library: http://librarymanager/All#SparkFun_BME280
-#include <SparkFunCCS811.h> // Click here to get the library: http://librarymanager/All#SparkFun_CCS811
-#include <MHZ19.h> // para MH-Z19B
+// MH-Z19B
+#include <MHZ19.h> // library for MH-Z19B: https://github.com/strange-v/MHZ19
 #include <SoftwareSerial.h> // Click here to get the library: http://librarymanager/All#EspSoftwareSerial
 #define TXPin 32 // para MH-Z19B
 #define RXPin 33 // para MH-Z19B
-
-// adapt these values to your needs
-unsigned long PERIOD = 180000; // periodo de captura en millisegundos, 60000 = 60 s = 1 min, 180000 = 180 s = 3 min
-String colsep = ";"; // separador columna de datos CSV mediante serial
-bool subirAinflux = true; // poner a false si no quereís subir los datos al servidor influx
-const char sensortag[] = "CODOS-001"; // cada sensor va a una serie - propongo poner un número único
-bool modemsleep = true; // poner a false si no quereís apagar el WiFi durante pausas
-bool debuginfo = true; // debuginfo via serial, poner a false para escribir datos en formato CSV
-int DriveMode = 3; // CCS811 DriveMode: 0 = Idle // 1 = read every 1s // 2 = every 10s // 3 = every 60s // 4 = RAW mode, no algorithms
-uint16_t baseline = 0xAFBD; // CCS811 baseline to set @startup, use getBaseline after warm-up in clean air to get this value - see example No. 4 of SparkFun CCS811 library
-
-// Instantiate  CCS811
+// CCS811
+#include <SparkFunCCS811.h> // Click here to get the library: http://librarymanager/All#SparkFun_CCS811
 //#define CCS811_ADDR 0x5B // Default CCS811 I2C Address
 #define CCS811_ADDR 0x5A // Alternate CCS811 I2C Address
 #define PIN_NOT_WAKE 5 // nWAKE Pin en D5
+// ZH07
+// Definitions for the ZH07 Particle-Sensor 
+#define LENG 31   //0x42 + 31 bytes equal to 32 bytes
+unsigned char buf[LENG];
+//
+// adapt these values to your needs
+unsigned long PERIOD = 60000; // capture period in milliseconds, 60000 = 60 s = 1 min, 180000 = 180 s = 3 min
+String colsep = ";"; // column separator in CSV
+bool modemsleep = true; // put to false to not use modemsleep feature
+bool debuginfo = true; // debuginfo via serial, put to false to write CSV formatted data through serial
+// adapt influx
+bool subirAinflux = true; // put to false if you don't want to upload data to influx server
+const char sensortag[] = "CODOS-001"; // every sensor uploads to a "Serie" which is prefixed with "Sensor" => "Sensor=CODOS_test" - i suggest to use a unique number/name
+
+// adapt used sensors - values of not used sensors will show up with value "0" in influx and serial
+// CCS811 - to be able to compensate the CCS811-values there is (at least) a temperature sensor needed; in this sketch we use the BME280 to compensate for temperature AND humidity
+bool useCCS811 = true; 
+int DriveMode = 3; // CCS811 DriveMode: 0 = Idle // 1 = read every 1s // 2 = every 10s // 3 = every 60s // 4 = RAW mode, no algorithms
+uint16_t baseline = 0xAFBD; // CCS811 baseline to set @startup, use getBaseline after warm-up in clean air to get this value - see example No. 4 of SparkFun CCS811 library
+// BME280
+bool useBME280 = true;
+// MH-Z19B
+bool useMHZ19B = true; 
+// ZH07
+bool useZH07 = true; 
+
+// Instantiate the CCS811 TVOC-Sensor with its I²C-Address
+CCS811 myCCS811(CCS811_ADDR);
 
 // Instantiate SoftwareSerial
 SoftwareSerial ss(RXPin, TXPin);// RX, TX
 // Instantiate the MH-Z19B CO2-Sensor with SoftwareSerial
 MHZ19 mhz(&ss); 
 
-// Definitions for the ZH07 Particle-Sensor 
-#define LENG 31   //0x42 + 31 bytes equal to 32 bytes
-unsigned char buf[LENG];
-
-// Instantiate the CCS811 TVOC-Sensor with its I²C-Address
-CCS811 myCCS811(CCS811_ADDR);
 // Instantiate the BME280 Environment-Sensor with its I²C-Address
 BME280 myBME280;
+
 // Instatiate influxDB
 InfluxArduino influx; 
 
 // NTP-Server
 const char* ntpServer = "pool.ntp.org";
 const long  gmtOffset_sec = 3600; // GMT+1 timezone
-const int   daylightOffset_sec = 0; // summer time +1h  3600
+const int   daylightOffset_sec = 3600; // summer time +1h  3600
 char meastime[32];
 
 // Measurement variables
@@ -145,17 +161,23 @@ void setup()
   Serial.println("WiFi connected!");
   delay(500);
 
+  // Start I²C Communication
+  Wire.begin();
+  
   // wake-up Pin CCS811
   pinMode(PIN_NOT_WAKE, OUTPUT); 
   delay(100);
   digitalWrite(PIN_NOT_WAKE, LOW); // wake-up CCS811 low-active
   delay(100);
 
+if(useZH07){
   // ZH07: Initialize Hardware Serial1 RX2/TX2 with GPIO 16/17
   Serial.println("-- Initializing Serial1 (ZH07) ...");
   Serial1.begin(9600,SERIAL_8N1, 16, 17); 
   Serial1.setTimeout(1500);    //set the Timeout to 1500ms, longer than the data transmission periodic time of the sensor  
+}
 
+if (useMHZ19B) {
   // MH-Z19B: Initialize Software Serial
   Serial.println("-- Initializing SoftwareSerial (MH-Z19B)...");
   { ss.begin(9600); 
@@ -166,10 +188,9 @@ void setup()
       Serial.print( "Acuracy:" ); Serial.println(mhz.getAccuracy()? "ON" : "OFF" );
       Serial.print( "Detection Range: " ); Serial.println( 5000 );
   }
+}
 
-  // Start I²C Communication
-  Wire.begin();
-  
+if (useCCS811) {
   // CCS811: Initialize sensor and print error status of .beginWithStatus()
   CCS811Core::CCS811_Status_e returnCode = myCCS811.beginWithStatus();
   Serial.print("CCS811 begin exited with: ");
@@ -191,7 +212,9 @@ void setup()
         Serial.println(myCCS811.statusString(returnCode));
       }
   delay(100);
-  
+}
+
+if (useBME280) {  
   // BME280: Set I²C Communication parameters
   myBME280.settings.commInterface = I2C_MODE;
   myBME280.settings.I2CAddress = 0x76;
@@ -204,21 +227,22 @@ void setup()
   //Calling .begin() causes the settings to be loaded
   myBME280.begin();
   delay(100); //Make sure sensor had enough time to turn on. BME280 requires 2ms to start up.
+}
 
   // InfluxDB: Initialize
-  if (subirAinflux) {  // only if true - solo si queremos subir datos a influxDB
+if (subirAinflux) {  // only if true
   influx.configure(INFLUX_DATABASE,INFLUX_IP); // third argument (port number) defaults to 8086
   influx.authorize(INFLUX_USER,INFLUX_PASS); // comment out if you don't have set the Influxdb .conf variable auth-enabled to true
   influx.addCertificate(ROOT_CERT); // comment if you don't have generated a CA cert and copied it into InfluxDB.h
   Serial.print("Using influx with HTTPS: ");
   Serial.println(influx.isSecure()); // will be true if you've added a ROOT_CERT to the InfluxDB.h file.
   delay(3000);
-  }
+}
 
   // Setup servidor de tiempo NTP
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
 
-  // cabezal del archivo CSV
+  // Header of CSV
   Serial.print("Start of measurement: ");
   printLocalTime();
   Serial.println();
@@ -249,6 +273,7 @@ void loop()
    } 
     unsigned long startTime = millis(); // used for timing when to send data next.
 
+if (useMHZ19B) {
   // Check to see if data is available from MH-Z19B
   MHZ19_RESULT response = mhz.retrieveData();
   if (response == MHZ19_RESULT_OK)
@@ -268,9 +293,10 @@ void loop()
     Serial.print(F("Error, code: "));
     Serial.println(response);
   }
+}
 
   // Get PM data from ZH07 // #################### ToDo: move to library #######################
-  if(Serial1.find(0x42)){    //start to read when detect 0x42
+  if(useZH07 && Serial1.find(0x42)){    //start to read when detect 0x42
     Serial1.readBytes(buf,LENG);
     if(buf[0] == 0x4d){
       if(checkValue(buf,LENG)){
@@ -290,12 +316,11 @@ void loop()
   }
   
   // Check to see if CCS811 data is available
-  if (myCCS811.dataAvailable())
-  {
+  if (useCCS811 && myCCS811.dataAvailable()) {
     // Calling this function updates the global TVOC and eCO2 variables
     myCCS811.readAlgorithmResults();
     // Read main CCS811 values
-    delay(10);
+    delay(100);
     val_eCO2 = myCCS811.getCO2();
     val_TVOC = myCCS811.getTVOC();
     currBaseline = myCCS811.getBaseline();    
@@ -305,39 +330,56 @@ void loop()
          Serial.print(", TVOC: ");         
          Serial.println(myCCS811.getTVOC());
       }
+
     delay(100);
   }
 
   // Read all the other values
+if (useMHZ19B) {
+    // Read MH-Z19B data    
     val_tempC = mhz.getTemperature();
     val_CO2 = mhz.getCO2();
     val_accCO2 = mhz.getAccuracy();
     val_minCO2 = mhz.getMinCO2();
+}
+
+if (useBME280) {  
     // Read BME280 data
     BMEtempC = myBME280.readTempC();
     BMEhumid = myBME280.readFloatHumidity();
-    BMEpres = (myBME280.readFloatPressure()) / 100; // Conversión a hPa
+    BMEpres = (myBME280.readFloatPressure()) / 100; // Conversion to hPa
+    if (debuginfo) {
+            Serial.print("BME280 T: ");
+            Serial.print(BMEtempC);        
+            Serial.print(", rH: ");
+            Serial.print(BMEhumid); 
+            Serial.print(", p: ");
+            Serial.println(BMEpres);
+         }
+}
 
+if (useCCS811) {
     // send BME280 values to the CCS811 for compensation
     myCCS811.setEnvironmentalData(BMEhumid, BMEtempC);
+}
 
     // print values in CSV format through Serial
     printInfoSerial();
 
-    // si queremos subir datos a influx
+    // if we want to upload data to
     if (subirAinflux) {  
-    //write our variables.
+    // initialize our variables.
     char tags[64];
-    char fields[512];
-    // concatenar el tag para el sensor
+    char fields[1024];
+    // prefix tag of sensor with "Sensor="
     char tagbuf[32];
     const char sensor[] = "Sensor=";
     strcpy(tagbuf,sensor);
     strcat(tagbuf,sensortag);
-    // escribir un tag con una descripción del sensor
+    // write the tag with a description of the sensor
     sprintf(tags,tagbuf); 
-    // escribir los valores
-    sprintf(fields,"CO2[ppm]=%d,T_MH[°C]=%0.1f,accuracy[o/o]=%d,CO2_min[ppm]=%d,PM1.0[µg/m³]=%d,PM2.5[µg/m³]=%d,PM10[µg/m³]=%d,eCO2[ppm]=%d,TVOC[ppb]=%d,T_BME[°C]=%0.2f,p[hPa]=%0.2f,rH[o/o]=%0.2f,baseline=%d",val_CO2,val_tempC,val_accCO2,val_minCO2,val_PM1_0,val_PM2_5,val_PM10,val_eCO2,val_TVOC,BMEtempC,BMEpres,BMEhumid,currBaseline); // escribir valores: CO2, Temperatura, accuracy y CO2_min
+    // write values
+    sprintf(fields,"CO2[ppm]=%d,T_MH[°C]=%0.1f,accuracy[o/o]=%0.1f,CO2_min[ppm]=%d,PM1_0[µg/m³]=%d,PM2_5[µg/m³]=%d,PM10[µg/m³]=%d,eCO2[ppm]=%d,TVOC[ppb]=%d,baseline=%d,T_BME[°C]=%0.1f,p[hPa]=%0.1f,rH[o/o]=%0.1f",val_CO2,val_tempC,val_accCO2,val_minCO2,val_PM1_0,val_PM2_5,val_PM10,val_eCO2,val_TVOC,currBaseline,BMEtempC,BMEpres,BMEhumid); // escribir valores: CO2, Temperatura, accuracy y CO2_min
     bool writeSuccessful = influx.write(INFLUX_MEASUREMENT,tags,fields);
     delay(500);
     if(!writeSuccessful)
@@ -362,38 +404,38 @@ void loop()
 
 void printInfoSerialHeader() // Header for CSV data
   {
-    Serial.println("Time" + colsep + "CO2 [ppm]" + colsep +  "T_MH [°C]" + colsep +  "PM1.0 [µg/m³]" + colsep +  "PM2.5 [µg/m³]" + colsep +  "PM10 [µg/m³]" + colsep + "eCO2 [ppm]" + colsep + "TVOC [ppb]" + colsep + "T_BME [°C]"  + colsep + "p [hPa]"  + colsep + "rH [o/o]" + colsep + "Baseline");
+    Serial.println("Time" + colsep + "CO2 [ppm]" + colsep +  "T_MH [°C]" + colsep +  "PM1.0 [µg/m³]" + colsep +  "PM2.5 [µg/m³]" + colsep +  "PM10 [µg/m³]" + colsep + "eCO2 [ppm]" + colsep + "TVOC [ppb]"  + colsep + "Baseline" + colsep + "T_BME [°C]"  + colsep + "p [hPa]"  + colsep + "rH [o/o]");
   }
  
-void printInfoSerial() // in CSV anotación
+void printInfoSerial() // in CSV anotation
   { 
   printLocalTime();
-  Serial.print(colsep); 
   //data from MH-Z19B
+  Serial.print(colsep); 
   Serial.print(val_CO2);
   Serial.print(colsep); 
   Serial.print(val_tempC); 
-  Serial.print(colsep); 
   //data from ZH07
+  Serial.print(colsep); 
   Serial.print(val_PM1_0);
   Serial.print(colsep);   
   Serial.print(val_PM2_5);
   Serial.print(colsep);  
   Serial.print(val_PM10);
-  Serial.print(colsep);  
   //data from CCS811
+  Serial.print(colsep);  
   Serial.print(val_eCO2);
   Serial.print(colsep); 
   Serial.print(val_TVOC);
   Serial.print(colsep); 
+  Serial.print(currBaseline);  
   //data from the BME280
+  Serial.print(colsep); 
   Serial.print(BMEtempC); 
   Serial.print(colsep); 
   Serial.print(BMEpres); 
   Serial.print(colsep); 
   Serial.print(BMEhumid);
-  Serial.print(colsep); 
-  Serial.print(currBaseline);  
   Serial.println(); // nueva línea
   }
 
