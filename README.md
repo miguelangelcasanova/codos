@@ -204,11 +204,15 @@ https://es.aliexpress.com/item/32946106807.html?srcSns=org.telegram.messenger&sp
 
 - *Air quality sensor:* This simple, fancy looking, ESP8266 based sensor measures values of CO2 and TVOC air pollutants. As output there is addressable RGB led strip, and/or optional OLED display which can show real time levels. https://github.com/Luc3as/Air-quality-Sensor/ (en inglés)
 
-- *Air quality meter:* http://www.futurashop.it/breakout-CCS811-air-quality-ft1331m-qualit%C3%A0%20aria?search=ccs811 (en italiano)
-
+  ![Cuco](img/nube.jpg ) 
+   
 - *CO2 Cuckoo Clock for schools and businesses (Why not eCO2?)* del maker y youtuber suizo Andreas Spiess:  https://www.youtube.com/watch?v=hcPdZlpaRTo (en inglés)
   
-- *Air quality meter* (de David Daghetta, en Thingiverse): https://www.thingiverse.com/thing:2569792 (en Inglés)
+  ![Cuco](img/cuckoo.png)
+  
+- 
+- *Air quality meter:* http://www.futurashop.it/breakout-CCS811-air-quality-ft1331m-qualit%C3%A0%20aria?search=ccs811 (en italiano) 
+  La caja puedes descargarla d*Air quality meter* (de David Daghetta, en Thingiverse): https://www.thingiverse.com/thing:2569792 (en Inglés)
 
 ![CO2](img/f3ccdd27d2000e3f9255a7e3e2c48800_preview_card.jpg)
 
