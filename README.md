@@ -30,6 +30,8 @@ https://medium.com/@jjose_19945/how-to-quantify-the-ventilation-rate-of-an-indoo
 
 Este enlace https://schools.forhealth.org/ventilation-guide/ nos dice también cómo y cuánto debemos ventilar...
 
+En este reciente informe del 03/11/2020 nos hablan con datos de la importancia de la ventilación y de la necesidad de ventilar en las aulas más allá de lo que indican muchos de los protocolos vigentes en muchas comunidades autónomas:   *El muestreo de mediciones realizado en centros educativos por el Comité de Expertos en Ventilación del COGITI, confirma la necesidad de contar con medidores de CO2:* 
+https://cogiti.es/el-muestreo-de-mediciones-realizado-en-centros-educativos-por-el-comite-de-expertos-en-ventilacion-del-cogiti-confirman-la-necesidad-de-contar-con-medidores-de-co2-como-referencia-objetiva-que-indiqu
 
 ## ¿Qué es 💪CODOS💪?
 
