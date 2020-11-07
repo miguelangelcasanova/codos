@@ -207,5 +207,9 @@ https://es.aliexpress.com/item/32946106807.html?srcSns=org.telegram.messenger&sp
 - *Air quality meter:* http://www.futurashop.it/breakout-CCS811-air-quality-ft1331m-qualit%C3%A0%20aria?search=ccs811 (en italiano)
 
 - *CO2 Cuckoo Clock for schools and businesses (Why not eCO2?)* del maker y youtuber suizo Andreas Spiess:  https://www.youtube.com/watch?v=hcPdZlpaRTo (en inglés)
+  
+- *Air quality meter* (de David Daghetta, en Thingiverse): https://www.thingiverse.com/thing:2569792 (en Inglés)
+
+![CO2](img/f3ccdd27d2000e3f9255a7e3e2c48800_preview_card.jpg)
 
 *(Este documento está en constante redacción)*
