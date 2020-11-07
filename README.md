@@ -55,8 +55,9 @@ En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 - Un sensor de eCO<sub>2</sub> CCS811 (he probado también con otros sensores como el Sensirion SDC30 pero su coste es mucho más elevado)
 
 ![Sensor CO2 CCS811](img/CCS811.jpg) ![Sensor CO2 CCS811](img/sensor-CCS811.png)
-- Otra posibilidad que es mejor que este sensor; pero también algo más caro es, el sensor MH-Z19b, su gran ventaja es que se trata de un sensor NDIR por lo que mide directamente CO<sub>2</sub> 
-- 
+
+- Otra posibilidad es utilizar este otro sensor; pero también algo más caro es, el MH-Z19b, su gran ventaja es que se trata de un sensor NDIR por lo que mide directamente CO<sub>2</sub> 
+
 ![Sensor CO2 MH-Z19](img/MH-Z19.jpg)
 
 - Opcionalmente un sensor de humedad, presión y temperatura BME280
