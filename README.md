@@ -134,7 +134,8 @@ Para la conexión de los diodos led al tratarse de salidas de 3.3V deberíamos u
 
 ### Otras versiones
 Gracias a otros miembros de la comunidad el proyecto ha ido creciendo y enriqueciéndose con las contribuciones de makers, makerspaces y fablabs.
-En la carpeta esp32 hay a tu disposición una versión avanzada que incluye el uso de bases de datos como InfluxDB para almacenar y visualizar en el futuro los datos de muchos sensores.
+
+En la carpeta esp32 hay a tu disposición una versión avanzada que incluye el uso de bases de datos como InfluxDB para almacenar y visualizar en el futuro los datos de muchos sensores creada por Andreas del Makespace Mallorca.
 
 ### El programa
 También he diseñado varias versiones del programa según la plataforma utilizada.
@@ -142,6 +143,8 @@ El programa debe cargarse desde el entorno IDE de Arduino o desde VS Studio Code
 
 ### El dispositivo
 He diseñado una caja imprimible en 3D para poder albergar el dispositivo aunque este puede montarse directamente sobre una placa de prototipos si no se tiene la habilidad para soldar unos cuantos componentes aunque su montaje debería resultar especialmente sencillo.
+
+En la carpeta STL hay diseños de cajas imprimibles en 3D y en Thingiverse puedes encontrar también otros modelos.
 
 ### Usando el dispositivo
 El dispositivo se conecta automáticamente a la red del aula para permitir que los datos de los sensores pueden visualizarse en una página web que genera el dispositivo desde cualquier otro dispositivo conectado a la misma red. Para ello debes averiguar la dirección IP del dispositivo y abrir en tu navegador una URL del tipo siguiente: http://192.168.1.105 dónde los números indican la dirección IP local del dispositivo en la red local.
@@ -193,9 +196,13 @@ En Aliexpress últimamente están entregando en 10 días (Hoy es 29/08/2020)
 
 https://es.aliexpress.com/item/32903358923.html?spm=a2g0o.productlist.0.0.26bc4071sE7mf2&algo_pvid=159e700e-7ec4-41f6-a8b4-ef1eb37b29d2&algo_expid=159e700e-7ec4-41f6-a8b4-ef1eb37b29d2-0&btsid=0b0a0ad815986989110232476e8172&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_
 
+El MH-Z19b lo puedes adquirir también en Amazon o Aliexpress por unos 16-25€:
+https://es.aliexpress.com/item/32946106807.html?srcSns=org.telegram.messenger&spreadType=socialShare&bizType=ProductDetail&tt=MG&image=U6c2b63d49cee4cc1935c5c06de0e2df9L.jpg&aff_platform=default&sk=_BSWtFw&description=%E2%82%AC+14%2C50++13%25OFF+%7C+Sensor+de+co2+infrarrojo+MH-Z19+para+co2%2C+monitor+MH-Z19B%2C+Sensor+de+gas+co2+de+di%C3%B3xido+de+carbono%2C+0-5000ppm&aff_trace_key=1c43dcc98a834a8fa43b79f907dd3d5b-1604748762672-07455-_BSWtFw&businessType=ProductDetail&title=%E2%82%AC+14%2C50++13%25OFF+%7C+Sensor+de+co2+infrarrojo+MH-Z19+para+co2%2C+monitor+MH-Z19B%2C+Sensor+de+gas+co2+de+di%C3%B3xido+de+carbono%2C+0-5000ppm&platform=AE&terminal_id=a42b9e0f7a294b098d58d5efd3cad8cf
+
+
 #### Otros proyectos parecidos
 
-- *Air quality sensor:* This simple, fancy looking, ESP8266 based sensor measures values of CO2 and TVOC air pollutants. As output there is addressable RGB led strip, and/or optional OLED display which can show real time levels. https://github.com/Luc3as/Air-quality-Sensor/ (n inglés)
+- *Air quality sensor:* This simple, fancy looking, ESP8266 based sensor measures values of CO2 and TVOC air pollutants. As output there is addressable RGB led strip, and/or optional OLED display which can show real time levels. https://github.com/Luc3as/Air-quality-Sensor/ (en inglés)
 
 - *Air quality meter:* http://www.futurashop.it/breakout-CCS811-air-quality-ft1331m-qualit%C3%A0%20aria?search=ccs811 (en italiano)
 
