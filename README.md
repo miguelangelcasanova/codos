@@ -210,7 +210,6 @@ https://es.aliexpress.com/item/32946106807.html?srcSns=org.telegram.messenger&sp
   
   ![Cuco](img/cuckoo.png)
   
-- 
 - *Air quality meter:* http://www.futurashop.it/breakout-CCS811-air-quality-ft1331m-qualit%C3%A0%20aria?search=ccs811 (en italiano) 
   La caja puedes descargarla d*Air quality meter* (de David Daghetta, en Thingiverse): https://www.thingiverse.com/thing:2569792 (en Inglés)
 
