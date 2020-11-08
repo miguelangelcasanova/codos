@@ -5,7 +5,7 @@ y otras variables ambientales para monitorizar la calidad del aire en el aula
 (o en otros lugares de trabajo)
 *********************************************************************************/
 
-char VERSION_SW[6] = "v1.04";
+char VERSION_SW[6] = "v1.05";
 #include "Wire.h"                       // Librería Wire para el soporte del protocolo i2c
 
 #include "MHZ19.h"                                        
@@ -126,6 +126,7 @@ char leyend[15] = "12345678901234"; // Variable donde pongo la leyenda que se pi
 char leyendGREEN[15] = "AULA OK"; 
 char leyendRED[15] = "VENTILAR"; 
 char leyendYELLOW[15] = "LIMITE KO"; 
+char leyendRECOVERY[15] = "RECOVERY"; 
 
 void setup() {
   Serial.begin(9600);
@@ -220,8 +221,11 @@ bool showImage = false; // Variable que indicara si hay que mostrar imagen de sm
 const unsigned long NUM_CYCLES_SHOW_DATA = 10; // muestro datos lecturas durante 10 lecturas ppm
 const unsigned long NUM_CYCLES_IMAGE = 2; // muestro smiley durante dos lecturas ppm en segundo plano
 unsigned long cycles = 0;
+const unsigned long recoveryResetTimeout = 120000;
+unsigned long measureUpdatedTimeTag=0;
+bool recoveryMaked=false;
 void loop() {
-  
+  if (measureUpdatedTimeTag==0) measureUpdatedTimeTag = millis();
   if (CO2_sensor_present) {
     
     if (millis() - getDataTimer >= 2000) {
@@ -230,9 +234,15 @@ void loop() {
       int temperature_read = myMHZ19.getTemperature()+OFFSET_CALIBRATION_TEMP;
       bool newData = false;
       
-      if ((ppm_uart_read > 0) && (ppm_uart != ppm_uart_read)) {
+      if (ppm_uart != ppm_uart_read) {
         ppm_uart = ppm_uart_read;
+        measureUpdatedTimeTag=millis();
         newData = true;
+      } else if (millis()-measureUpdatedTimeTag >= recoveryResetTimeout) {
+        Serial.print("measureUpdatedTimeTag=");Serial.print(measureUpdatedTimeTag);Serial.print(" millis()=");Serial.println(millis());
+        measureUpdatedTimeTag=millis();
+        recoveryMaked = true;
+        myMHZ19.recoveryReset();
       }
       
       if ((temperature_read > 0) && (temperature != temperature_read)) {
@@ -255,6 +265,7 @@ void loop() {
         showImage = true;
         speaker();
         lastState = currentState;
+        if (recoveryMaked == false) {
         switch (currentState) {
           case GREEN : 
             strcpy(leyend,leyendGREEN); break;
@@ -262,6 +273,9 @@ void loop() {
             strcpy(leyend,leyendRED); break;
           case YELLOW :
             strcpy(leyend,leyendYELLOW); break;
+        }
+        } else {
+          strcpy(leyend,leyendRECOVERY);
         }
         newData = true;
       }
