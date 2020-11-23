@@ -1,11 +1,10 @@
 /*********************************************************************************
 CODOS AKA CO2 
-Un sistema de bajo coste basado en ESP32 para la detección del CO2 
-y otras variables ambientales para monitorizar la calidad del aire en el aula
-(o en otros lugares de trabajo)
+Un sistema de bajo coste basado en Arduino NANO, OLED SS1306, MHZ19B para la detección del CO2 
+y temperatura en el aula
 *********************************************************************************/
 
-char VERSION_SW[6] = "v1.05";
+char VERSION_SW[6] = "v1.10";
 #include "Wire.h"                       // Librería Wire para el soporte del protocolo i2c
 
 #include "MHZ19.h"                                        
@@ -128,6 +127,8 @@ char leyendRED[15] = "VENTILAR";
 char leyendYELLOW[15] = "LIMITE KO"; 
 char leyendRECOVERY[15] = "RECOVERY"; 
 
+void(* resetFunc) (void) = 0;//declare reset function at address 
+
 void setup() {
   Serial.begin(9600);
   bool status;
@@ -165,8 +166,7 @@ void setup() {
     mySerial.begin(BAUDRATE);                               // (Uno example) device to MH-Z19 serial start   
     //mySerial.begin(BAUDRATE, SERIAL_8N1, RX_PIN, TX_PIN); // (ESP32 Example) device to MH-Z19 serial start   
     myMHZ19.begin(mySerial);                                // *Serial(Stream) refence must be passed to library begin(). 
-
-    myMHZ19.autoCalibration(false);                              // Turn auto calibration ON (OFF autoCalibration(false))    
+    //myMHZ19.autoCalibration(false);                              // Turn auto calibration ON (OFF autoCalibration(false))    
  } 
 
  if (OLED_present) {
@@ -221,7 +221,7 @@ bool showImage = false; // Variable que indicara si hay que mostrar imagen de sm
 const unsigned long NUM_CYCLES_SHOW_DATA = 10; // muestro datos lecturas durante 10 lecturas ppm
 const unsigned long NUM_CYCLES_IMAGE = 2; // muestro smiley durante dos lecturas ppm en segundo plano
 unsigned long cycles = 0;
-const unsigned long recoveryResetTimeout = 120000;
+const unsigned long recoveryResetTimeout = 600000;
 unsigned long measureUpdatedTimeTag=0;
 bool recoveryMaked=false;
 void loop() {
@@ -242,7 +242,7 @@ void loop() {
         Serial.print("measureUpdatedTimeTag=");Serial.print(measureUpdatedTimeTag);Serial.print(" millis()=");Serial.println(millis());
         measureUpdatedTimeTag=millis();
         recoveryMaked = true;
-        myMHZ19.recoveryReset();
+        myMHZ19.recoveryReset(); //resetFunc()
       }
       
       if ((temperature_read > 0) && (temperature != temperature_read)) {
@@ -265,7 +265,7 @@ void loop() {
         showImage = true;
         speaker();
         lastState = currentState;
-        if (recoveryMaked == false) {
+       // if (recoveryMaked == false) {
         switch (currentState) {
           case GREEN : 
             strcpy(leyend,leyendGREEN); break;
@@ -274,9 +274,9 @@ void loop() {
           case YELLOW :
             strcpy(leyend,leyendYELLOW); break;
         }
-        } else {
-          strcpy(leyend,leyendRECOVERY);
-        }
+       // } else {
+       //   strcpy(leyend,leyendRECOVERY);
+       // }
         newData = true;
       }
       
@@ -325,9 +325,17 @@ const int pinBuzzer = 9;
 
 void speaker() {
   tone(pinBuzzer, 494);
-  delay(100);
+  delay(50);
   tone(pinBuzzer, 392);
-  delay(300);  
+  delay(150);  
+  tone(pinBuzzer, 694);
+  delay(150);
+  tone(pinBuzzer, 592);
+  delay(300);
+  tone(pinBuzzer, 894);
+  delay(150);
+  tone(pinBuzzer, 792);
+  delay(300);
   noTone(pinBuzzer);  
 }
 
