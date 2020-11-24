@@ -1,0 +1,27 @@
+uart:
+  rx_pin: $RX_PIN
+  tx_pin: $TX_PIN
+  baud_rate: 9600      
+  id: soft_uart
+
+sensor:
+- platform: mhz19
+  uart_id: soft_uart
+  automatic_baseline_calibration: false
+  id: mhz19_sensor
+  update_interval: 30s
+  co2:
+    name: "MH-Z19 CO2 Value"
+    id: mh_z19_co2
+    filters:
+        - sliding_window_moving_average: 
+            window_size: 2
+            send_every: 2
+  temperature:
+    name: "MH-Z19 Temperature"
+    id: mh_z19_temp
+    filters:
+      - sliding_window_moving_average:
+          window_size: 2
+          send_every: 2
+

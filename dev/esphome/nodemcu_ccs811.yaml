@@ -1,0 +1,47 @@
+esphome:
+    name: co2_panel1
+    platform: esp8266
+    board: nodemcu
+    
+mqtt:
+    broker: ip_servidor_mqtt
+
+wifi:
+    ssid: tu_ssid
+    password: tu_passwd
+
+# Habilitar logger (por UART y mqtt)
+logger:
+
+# HAbilita actualizaciones OTA
+ota:
+
+# desactivo API ya que no hay HomeAssistant
+# api:
+
+# Activa servidor web en puerto 80
+# (ahí se pueden ver los valores del sensor, el log, actualizar firmware)
+web_server:
+    port: 80
+    
+# Si no consigue conectar al WiFi en 2 minutos activa un AP al que conectarse y poder configurar desde el movil.
+captive_portal:
+      
+# Habilita I2C.
+# Por defecto hará un escaneo en el arranque y mostrará por consola/mqtt todos los dispositivos encontrados.
+i2c: 
+    scl: D1
+    sda: D2
+
+sensor:
+    - platform: ccs811
+      # Nombre descriptivo de los sensores
+      eco2:
+          name: "CCS811 eCO2 Value"
+      tvoc:
+          name: "CCS811 Total Volatile Organic Compound"
+      address: 0x5A
+      baseline: 0x02B4
+      update_interval: 60s
+
+

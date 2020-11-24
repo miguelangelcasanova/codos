@@ -1,0 +1,45 @@
+# CO2 sensor using MQ-135
+# ideas from http://archive.fabacademy.org/2017/fablabfct/students/352/week13.html
+# ideas from https://www.codrey.com/electronic-circuits/how-to-use-mq-135-gas-sensor/
+substitutions:
+  name:     co2_panel1
+  platform: ESP8266
+  board:    d1_mini
+
+  <<: !include co2_common/common_substitutions.yaml
+  <<: !include co2_common/glyphs_substitutions.yaml
+
+  SCL_PIN:  D1
+  SDA_PIN:  D2
+  TX_PIN:   D8
+  RX_PIN:   D7
+  LED_PIN:  D4
+  
+  # MQ-135 callibration
+  #  co2_0:
+  rzero: '35.0'
+  #  co2_1:
+  #  rzero: '196.0'
+
+  CCS811_baseline: "0xBCBB"
+
+  # disable logging via UART (need UART to access MH-Z19)
+  logger_baudrate: "115200"
+
+  # id of the item to show on display and send via HTTP
+  co2_var: ccs811_eco2
+
+  # action to call when a "calibrate" message is received
+  calibrate_topic:   "$name/config/calibrate"
+  calibrate_action:  ""
+  
+packages:
+  ccs811: !include "co2_common/sensor_ccs811.yaml"
+  display: !include "co2_common/display.yaml"
+  mqtt: !include co2_common/mqtt.yaml 
+  bme280: !include "co2_common/sensor_bme280.yaml"
+  #  mq135: !include "co2_common/sensor_mq135.yaml"
+  #  mhz19: !include "co2_common/sensor_mhz19.yaml"
+  
+
+<<: !include co2_common/common.yaml

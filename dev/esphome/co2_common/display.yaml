@@ -1,0 +1,67 @@
+---
+font:
+    - file: 'co2_common/fonts/arial.ttf'
+      id: font12
+      size: 12
+    - file: 'co2_common/fonts/BebasNeue-Regular.ttf'
+      id: font48
+      size: 48
+    - file: 'co2_common/fonts/BebasNeue-Regular.ttf'
+      id: font24
+      size: 24
+    - file: 'co2_common/fonts/MaterialIcons-Regular.ttf'
+      id: icons12
+      size: 12
+      glyphs:
+        - "$WiFi"
+        - "$WiFi_ERROR"
+        - "$WiFi_OFF"
+  
+display:
+- platform: ssd1306_i2c
+  model: "SSD1306 128x64"
+  address: 0x3C
+  lambda: |-
+    
+    /* display time */
+    it.strftime(127, 0, id(font12), TextAlign::TOP_RIGHT, "%H:%M", id(esptime).now());
+    
+    /* display wifi info for some seconds after bootup */
+    if (millis() < 60000) {
+        it.printf(0, 0, id(font12), TextAlign::TOP_LEFT,"%s", WiFi.SSID().c_str());
+    } else {
+        it.printf(0, 0, id(font12), TextAlign::TOP_LEFT,"$name");
+    }
+        
+    yield();
+    
+    if ( id($co2_var).state < 10000) {
+        // display mh_z19 readings (raw_state). It may be different of the value sent via MQTT, as we only send 1 value every minute (mean value)
+        it.printf(85, 51, id(font48), TextAlign::BASELINE_RIGHT,"%d", (int) id($co2_var).raw_state);
+        it.printf(109, 33, id(font24), TextAlign::BASELINE_CENTER,"%dC", (int) id(bme280_temperature).state);
+        it.printf(109, 53, id(font24), TextAlign::BASELINE_CENTER,"%d%%", (int) id(bme280_humidity).state);
+    }
+    
+    it.printf(0, 63, id(font12), TextAlign::BASELINE_LEFT,"%s", WiFi.localIP().toString().c_str());
+    
+    if (int(millis()/1000) % 2) {
+        it.printf(128, 63, id(font12), TextAlign::BASELINE_RIGHT,"o");
+    }
+    
+    yield();
+    
+    switch (WiFi.status()) {
+        case WL_CONNECTED:
+        it.printf(90, 0, id(icons12), TextAlign::TOP_RIGHT,"$WiFi");
+        break;
+        case WL_NO_SSID_AVAIL:
+        it.printf(90, 0, id(icons12), TextAlign::TOP_RIGHT,"$WiFi_ERROR");
+        break;
+        case WL_DISCONNECTED:
+        it.printf(90, 0, id(icons12), TextAlign::TOP_RIGHT,"$WiFi_OFF");
+        break;  
+        default:
+        it.printf(90, 0, id(icons12), TextAlign::TOP_RIGHT,"$WiFi_ERROR");
+        break;
+    }
+        

@@ -1,0 +1,40 @@
+# CO2 sensor using MQ-135
+# ideas from http://archive.fabacademy.org/2017/fablabfct/students/352/week13.html
+# ideas from https://www.codrey.com/electronic-circuits/how-to-use-mq-135-gas-sensor/
+substitutions:
+  <<: !include co2_common/common_substitutions.yaml
+  <<: !include co2_common/glyphs_substitutions.yaml
+  
+  name:     co2_esp32
+  platform: esp32
+  board:    esp-wrover-kit  
+  SCL_PIN:  GPIO22
+  SDA_PIN:  GPIO21
+
+  # UART1/software serial for MH-Z19
+  RX_PIN:   GPIO16
+  TX_PIN:   GPIO17
+  
+  # blinking led during wifi negotiation
+  LED_PIN:  GPIO2
+
+  # id of the item to show on display and send via HTTP
+  co2_var:  mh_z19_co2
+
+  # action to call when a "calibrate" message is received
+  calibrate_topic:   "$name/config/calibrate"
+  calibrate_action:  "id(mhz19_sensor).calibrate_zero();"
+
+  logger_baudrate: "115200"
+
+packages:
+  display: !include "co2_common/display.yaml"
+  mqtt: !include co2_common/mqtt.yaml 
+  mhz19: !include "co2_common/sensor_mhz19.yaml"
+  bme280: !include "co2_common/sensor_bme280.yaml"
+  #  mq135: !include "co2_common/sensor_mq135.yaml"
+  #  ccs811: !include "co2_common/sensor_ccs811.yaml"
+    
+
+<<: !include co2_common/common.yaml
+
