@@ -1,10 +1,10 @@
 /*********************************************************************************
 CODOS AKA CO2 
-Un sistema de bajo coste basado en ESP32 para la detección del CO2 
-y otras variables ambientales para monitorizar la calidad del aire en el aula
-(o en otros lugares de trabajo)
+Un sistema de bajo coste basado en Arduino NANO, OLED SS1306, MHZ19B para la detección del CO2 
+y temperatura en el aula
 *********************************************************************************/
 
+char VERSION_SW[6] = "v1.10";
 #include "Wire.h"                       // Librería Wire para el soporte del protocolo i2c
 
 #include "MHZ19.h"                                        
@@ -119,17 +119,22 @@ unsigned long getDataTimer = 0;
 unsigned long MHZ19B_PREHEATING_TIME = 60000; // Por especificaciones tiene un PREHEATING Time de 3 minutos... pero pongo 1.. 
 
 const int OFFSET_CALIBRATION_TEMP = -6; // Valor obtenido de comparar con un termometro mas fiable que tengo en casa.. NO ES MUY FIABLE
-const int OFFSET_CALIBRATION_PPM = -100; // Esta calibracion esta inventada (PENDIENTE) porque supongo que debiera ser unas tablas en funcion de temp y humedad asi que tomo un valor conservador para intentar no generar falsa alarma en el aula.
+const int OFFSET_CALIBRATION_PPM = 0; // Esta calibracion esta inventada (PENDIENTE) porque supongo que debiera ser unas tablas en funcion de temp y humedad asi que tomo un valor conservador para intentar no generar falsa alarma en el aula.
 int p1 = 0; // Variable donde calculo el porcentaje sobre el limite establecido como ROJO
 char leyend[15] = "12345678901234"; // Variable donde pongo la leyenda que se pinta en la barra de progreso en funcion del estado
 char leyendGREEN[15] = "AULA OK"; 
 char leyendRED[15] = "VENTILAR"; 
 char leyendYELLOW[15] = "LIMITE KO"; 
+char leyendRECOVERY[15] = "RECOVERY"; 
+
+void(* resetFunc) (void) = 0;//declare reset function at address 
 
 void setup() {
   Serial.begin(9600);
   bool status;
 
+  speaker();
+  
   Serial.println("Sensor MHZ19B y OLED 0.96");
 
   Wire.begin(); //Inialize I2C Hardware
@@ -145,6 +150,10 @@ void setup() {
 
       // Draw a single pixel in white
       display.drawPixel(10, 10, SSD1306_WHITE);
+      display.setCursor(0,0);
+      display.setTextSize(2);
+      display.setTextColor(WHITE);
+      display.println(VERSION_SW);
 
       // Show the display buffer on the screen. You MUST call display() after
       // drawing commands to make them visible on screen!
@@ -157,8 +166,7 @@ void setup() {
     mySerial.begin(BAUDRATE);                               // (Uno example) device to MH-Z19 serial start   
     //mySerial.begin(BAUDRATE, SERIAL_8N1, RX_PIN, TX_PIN); // (ESP32 Example) device to MH-Z19 serial start   
     myMHZ19.begin(mySerial);                                // *Serial(Stream) refence must be passed to library begin(). 
-
-    myMHZ19.autoCalibration();                              // Turn auto calibration ON (OFF autoCalibration(false))    
+    //myMHZ19.autoCalibration(false);                              // Turn auto calibration ON (OFF autoCalibration(false))    
  } 
 
  if (OLED_present) {
@@ -195,8 +203,8 @@ void setup() {
 
 int ppm_uart = 0; // Variable donde vuelco el valor CO2 obtenido del MHZ19B
 int temperature = 0; // Variable donde vuelco el valor temperatura obtenido del MHZ19B
-const int CO2_safe_level = 500;        // Se debe especificar un valor máximo de CO2 seguro
-const int CO2_alarm_level = 1100;       // Se debe especificar un valor máximo de CO2 de alarma
+const int CO2_safe_level = 800;        // Se debe especificar un valor máximo de CO2 seguro
+const int CO2_alarm_level = 1200;       // Se debe especificar un valor máximo de CO2 de alarma
 
 // Tipos y variables para controlar el estado del semaforo y las acciones asociadas
 typedef enum {
@@ -207,13 +215,17 @@ typedef enum {
 
 SEMAPHORE_TYPE currentState = GREEN;
 SEMAPHORE_TYPE lastState = RED;
+const int HISTERESIS = 30;
 
 bool showImage = false; // Variable que indicara si hay que mostrar imagen de smiley
 const unsigned long NUM_CYCLES_SHOW_DATA = 10; // muestro datos lecturas durante 10 lecturas ppm
 const unsigned long NUM_CYCLES_IMAGE = 2; // muestro smiley durante dos lecturas ppm en segundo plano
 unsigned long cycles = 0;
+const unsigned long recoveryResetTimeout = 600000;
+unsigned long measureUpdatedTimeTag=0;
+bool recoveryMaked=false;
 void loop() {
-  
+  if (measureUpdatedTimeTag==0) measureUpdatedTimeTag = millis();
   if (CO2_sensor_present) {
     
     if (millis() - getDataTimer >= 2000) {
@@ -222,9 +234,15 @@ void loop() {
       int temperature_read = myMHZ19.getTemperature()+OFFSET_CALIBRATION_TEMP;
       bool newData = false;
       
-      if ((ppm_uart_read > 0) && (ppm_uart != ppm_uart_read)) {
+      if (ppm_uart != ppm_uart_read) {
         ppm_uart = ppm_uart_read;
+        measureUpdatedTimeTag=millis();
         newData = true;
+      } else if (millis()-measureUpdatedTimeTag >= recoveryResetTimeout) {
+        Serial.print("measureUpdatedTimeTag=");Serial.print(measureUpdatedTimeTag);Serial.print(" millis()=");Serial.println(millis());
+        measureUpdatedTimeTag=millis();
+        recoveryMaked = true;
+        myMHZ19.recoveryReset(); //resetFunc()
       }
       
       if ((temperature_read > 0) && (temperature != temperature_read)) {
@@ -245,7 +263,9 @@ void loop() {
       } else if (currentState != lastState) {
         cycles = 0;
         showImage = true;
+        speaker();
         lastState = currentState;
+       // if (recoveryMaked == false) {
         switch (currentState) {
           case GREEN : 
             strcpy(leyend,leyendGREEN); break;
@@ -254,6 +274,9 @@ void loop() {
           case YELLOW :
             strcpy(leyend,leyendYELLOW); break;
         }
+       // } else {
+       //   strcpy(leyend,leyendRECOVERY);
+       // }
         newData = true;
       }
       
@@ -297,6 +320,25 @@ void loop() {
     
   delay(1000);
 }
+
+const int pinBuzzer = 9;
+
+void speaker() {
+  tone(pinBuzzer, 494);
+  delay(50);
+  tone(pinBuzzer, 392);
+  delay(150);  
+  tone(pinBuzzer, 694);
+  delay(150);
+  tone(pinBuzzer, 592);
+  delay(300);
+  tone(pinBuzzer, 894);
+  delay(150);
+  tone(pinBuzzer, 792);
+  delay(300);
+  noTone(pinBuzzer);  
+}
+
 
 void drawPercentbar(int x,int y, int width,int height, int progress, bool customLeyend, char *strCustomLeyend)
 {
@@ -344,7 +386,9 @@ void drawPercentbar(int x,int y, int width,int height, int progress, bool custom
 void traffic_lights(int CO2_value){
       
   Serial.println(CO2_value);
-  if (CO2_value <= CO2_safe_level){
+  // Condicion con histeresis en bajada de estado
+  if (((currentState != GREEN) && (CO2_value <= (CO2_safe_level-HISTERESIS))) ||
+     ((currentState == GREEN) && (CO2_value <= CO2_safe_level))){
     // Encender el led verde y apagar el resto
     Serial.println("Parece que el aula no necesita más ventilación de momento");
     digitalWrite(verde, HIGH);
@@ -357,7 +401,9 @@ void traffic_lights(int CO2_value){
       display.display();
     }
   } 
-  if ((CO2_value > CO2_safe_level) & (CO2_value < CO2_alarm_level)) {
+  // Condicion con histeresis en bajada de estado
+  if (((currentState != RED) && ((CO2_value > CO2_safe_level) & (CO2_value < CO2_alarm_level))) ||
+     ((currentState == RED) && ((CO2_value > CO2_safe_level) & (CO2_value < (CO2_alarm_level-HISTERESIS))))) {
     // Encender el led amarillo y apagar el resto
     Serial.println("El aire del aula necesitará renovarse pronto");
     digitalWrite(verde, LOW);
