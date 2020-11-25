@@ -1,0 +1,14 @@
+sensor:
+  - platform: ccs811
+    eco2:
+      name: "CCS811 eCO2 Value"
+      id: ccs811_eco2
+    tvoc:
+      name: "CCS811 Total Volatile Organic Compound"
+      id: ccs811_tvoc
+    address: 0x5A
+    baseline: ${CCS811_baseline}
+
+    # temperature needed to callibration
+    temperature: bme280_temperature
+    humidity: bme280_humidity
