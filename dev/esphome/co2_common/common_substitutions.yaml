@@ -1,0 +1,9 @@
+# common substitutions:
+mqtt_broker: !secret mqtt_broker
+mqtt_username: !secret mqtt_username
+mqtt_password: !secret mqtt_password
+
+logger_baudrate: "115200"
+
+update_interval: 60s
+

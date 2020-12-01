@@ -1,0 +1,55 @@
+globals:
+  - id: rzero
+    type: float
+    initial_value: $rzero 
+
+sensor:
+  - platform: adc
+    pin: A0
+    name: "CO2_adc"
+    id: "co2_adc"
+    update_interval: 15s
+    accuracy_decimals: 4
+    filters:
+    - multiply: 3300 # 3.3 * 1000
+    - median:
+        window_size: 4
+        send_every: 4
+        send_first_at: 1
+
+  - platform: template
+    id: "co2_r1"
+    name: "co2_r1"
+
+  # Before you can use the sensor, it has to be calibrated. 
+  # For this, connect the sensor to your circuit and leave it powered on for 12-24 h to burn it in. 
+  # Then put it into outside air, preferably at 20°C/35% rel. hum. (humidity is not so crucial). 
+  # Read out the calibration value (co2_rZero) as such and edit the RZERO constant in co2_ppm template
+  # Once the sensor is calibrated, you can delete/comment this block
+  - platform: template
+    id: "co2_rZero"
+    name: "co2_rZero"
+    accuracy_decimals: 4
+
+  - platform: template
+    id: "co2_ppm"
+    name: "co2_ppm"
+    update_interval: 60s
+    lambda: |-
+      float PARA = 116.6020682;
+      float PARB = 2.769034857;
+      float ATMOCO2 = 411.18; // from http://co2.earth/daily-co2
+      float VIN = 3300;
+      float RLOAD = 22; // changed module load resistor (1K) for a 22K one.
+      
+      float pin_read = id(co2_adc).state;
+      if (pin_read == 0) pin_read = 1; // avoid divide by zero
+      float R1 = RLOAD * ( (VIN - pin_read) / pin_read ); // sensor resistance value
+      float new_rzero =  R1 * pow((ATMOCO2/PARA), (1./PARB));   
+      
+      float ppm = PARA * pow( (R1 / id(rzero)), -PARB);
+
+      id(co2_r1).publish_state(R1);
+      id(co2_rZero).publish_state(new_rzero);
+      
+      return ppm;

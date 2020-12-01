@@ -1,0 +1,13 @@
+mqtt:
+  broker: $mqtt_broker
+  username: $mqtt_username
+  password: $mqtt_password 
+  reboot_timeout: 0s
+  on_message:        
+    # node/config/calibrate
+    # define calibrate_action depending on the sensor used
+    - topic: $name/config/calibrate
+      then:
+        - lambda: |- 
+            $calibrate_action
+    

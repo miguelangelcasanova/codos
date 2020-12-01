@@ -1,0 +1,54 @@
+esphome:
+  name: $name
+  platform: $platform
+  board: $board
+  
+
+globals:
+  - id: display_value
+    type: float
+    initial_value: '0'
+
+
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid
+      password: !secret wifi_password
+
+  ap:
+    ssid: ESP_$name
+    password: !secret ap_password
+    ap_timeout: 1min
+
+web_server:
+  port: 80
+
+captive_portal:
+
+# Enable logging
+logger:
+  baud_rate: $logger_baudrate
+  hardware_uart: UART0
+  level: DEBUG
+
+
+ota:               
+
+time:
+  - platform: sntp
+    id: esptime          
+    timezone: Europe/Madrid
+
+i2c:
+  scl: ${SCL_PIN}
+  sda: ${SDA_PIN}
+
+
+switch:
+  - platform: gpio
+    name: "Led"
+    id: led
+    pin: 
+      inverted: false
+      number: $LED_PIN
+      
