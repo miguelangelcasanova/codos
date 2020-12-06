@@ -54,13 +54,14 @@ En su versión IoT, para construir CODOS se necesitan los siguientes elementos:
 - Un ESP32 por ejemplo el ESP32-DOIT-DEVKIT (también puedes utilizar un ESP8266)
 
 ![ESP32-DEVKITC](img/esp32-devkitc.jpg)
-- Un sensor de eCO<sub>2</sub> CCS811 (he probado también con otros sensores como el Sensirion SDC30 pero su coste es mucho más elevado)
 
-![Sensor CO2 CCS811](img/CCS811.jpg) ![Sensor CO2 CCS811](img/sensor-CCS811.png)
-
-- Otra posibilidad es utilizar este otro sensor; pero también algo más caro es, el MH-Z19b, su gran ventaja es que se trata de un sensor NDIR por lo que mide directamente CO<sub>2</sub> 
+- Un sensor de CO<sub>2</sub>, como el MH-Z19b. Su gran ventaja es que se trata de un sensor NDIR por lo que mide directamente CO<sub>2</sub>.  (he probado también con otros sensores como el Sensirion SDC30 pero su coste es mucho más elevado). 
 
 ![Sensor CO2 MH-Z19](img/MH-Z19.jpg)
+ 
+- Otra alternativa más barata es el sensor de eCO<sub>2</sub> CCS811. Este sensor no mide directamente CO<sub>2</sub>, sino una estimación a partir de la presencia de otros gases. Aunque es útil para medir calidad del aire, no es el sensor más adecuado para este proyecto ya que puede dar niveles muy altos por otros motivos, y no solamente por acumulación de CO<sub>2</sub>.
+
+![Sensor CO2 CCS811](img/CCS811.jpg) ![Sensor CO2 CCS811](img/sensor-CCS811.png)
 
 - Opcionalmente un sensor de humedad, presión y temperatura BME280
 
